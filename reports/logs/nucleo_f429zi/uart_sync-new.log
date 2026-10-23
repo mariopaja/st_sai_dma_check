@@ -1,0 +1,21 @@
+*** Booting Zephyr OS build v4.5.0-rc2-403-gb70dbaf045e0 ***
+SAI DMA hw test (sync loopback)
+LOOPBACK ws=16
+[00:00:00.009,000] <wrn> i2s_stm32_sai: Synchronous RX peripheral mode requires an active controller with bit clock gating disabled
+  round 0: 12800 samples checked, 0 skipped before lock, 0 errors, 0 L/R swapped
+  round 1: 12800 samples checked, 0 skipped before lock, 0 errors, 0 L/R swapped
+  round 2: 12800 samples checked, 0 skipped before lock, 0 errors, 0 L/R swapped
+  after drop: 12800 samples checked, 0 skipped before lock, 0 errors, 0 L/R swapped
+LOOPBACK ws=24
+[00:00:00.709,000] <wrn> i2s_stm32_sai: Synchronous RX peripheral mode requires an active controller with bit clock gating disabled
+  round 0: 12800 samples checked, 0 skipped before lock, 0 errors, 0 L/R swapped
+  round 1: 12800 samples checked, 0 skipped before lock, 0 errors, 0 L/R swapped
+  round 2: 12800 samples checked, 0 skipped before lock, 0 errors, 0 L/R swapped
+  after drop: 12800 samples checked, 0 skipped before lock, 0 errors, 0 L/R swapped
+LOOPBACK ws=32
+[00:00:01.409,000] <wrn> i2s_stm32_sai: Synchronous RX peripheral mode requires an active controller with bit clock gating disabled
+  round 0: 12800 samples checked, 0 skipped before lock, 0 errors, 0 L/R swapped
+  round 1: 12800 samples checked, 0 skipped before lock, 0 errors, 0 L/R swapped
+  round 2: 12800 samples checked, 0 skipped before lock, 0 errors, 0 L/R swapped
+  after drop: 12800 samples checked, 0 skipped before lock, 0 errors, 0 L/R swapped
+RESULT: PASS (64 passed, 0 failed)

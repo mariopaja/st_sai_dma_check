@@ -1,0 +1,133 @@
+[00:00:00.000,000] <err> dma_stm32_bdma: Data size too big: -1207433574
+
+[00:00:00.007,000] <err> dmamux_stm32: cannot configure the dmamux.
+[00:00:00.014,000] <err> i2s_stm32_sai: Failed to configure DMA channel 0
+[00:00:00.021,000] <err> i2s_stm32_sai: SAI Sub-Block DMA Init <FAILED>, ret: -22
+[00:00:00.029,000] <err> dma_stm32_bdma: Data size too big: -1207433574
+
+[00:00:00.037,000] <err> dmamux_stm32: cannot configure the dmamux.
+[00:00:00.044,000] <err> i2s_stm32_sai: Failed to configure DMA channel 1
+[00:00:00.051,000] <err> i2s_stm32_sai: SAI Sub-Block DMA Init <FAILED>, ret: -22
+*** Booting Zephyr OS build v4.5.0-rc2-403-gb70dbaf045e0 ***
+SAI DMA hw test (sync loopback), slabs 0x38001000/0x38000000 (nocache)
+  FAIL line 714: not ready
+LOOPBACK ws=16
+[00:00:00.075,000] <wrn> i2s_stm32_sai: Synchronous RX peripheral mode requires an active controller with bit clock gating disabled
+[00:00:00.087,000] <err> i2s_stm32_sai: HAL_SAI_Transmit_DMA: <FAILED>
+[00:00:00.094,000] <err> i2s_stm32_sai: START trigger failed -5
+[00:00:00.121,000] <err> i2s_stm32_sai: HAL_SAI_Receive_DMA: <FAILED>
+[00:00:00.128,000] <err> i2s_stm32_sai: START trigger failed -5
+  FAIL line 677: rx start -5
+[00:00:01.137,000] <err> i2s_stm32_sai: RX queue: 0
+  FAIL line 606: round 0: read -11 at block 0 (0 errors so far)
+[00:00:01.148,000] <err> i2s_stm32_sai: PREPARE - invalid state: 1
+[00:00:02.165,000] <err> i2s_stm32_sai: RX queue: 0
+  FAIL line 245: slab leak after stop (7 free)
+[00:00:02.225,000] <err> i2s_stm32_sai: HAL_SAI_Receive_DMA: <FAILED>
+[00:00:02.232,000] <err> i2s_stm32_sai: START trigger failed -5
+  FAIL line 677: rx start -5
+[00:00:03.242,000] <err> i2s_stm32_sai: RX queue: 0
+  FAIL line 606: round 1: read -11 at block 0 (0 errors so far)
+[00:00:03.253,000] <err> i2s_stm32_sai: PREPARE - invalid state: 1
+[00:00:04.270,000] <err> i2s_stm32_sai: RX queue: 0
+  FAIL line 245: slab leak after stop (6 free)
+[00:00:04.330,000] <err> i2s_stm32_sai: HAL_SAI_Receive_DMA: <FAILED>
+[00:00:04.337,000] <err> i2s_stm32_sai: START trigger failed -5
+  FAIL line 677: rx start -5
+[00:00:05.346,000] <err> i2s_stm32_sai: RX queue: 0
+  FAIL line 606: round 2: read -11 at block 0 (0 errors so far)
+[00:00:05.357,000] <err> i2s_stm32_sai: PREPARE - invalid state: 1
+[00:00:06.374,000] <err> i2s_stm32_sai: RX queue: 0
+  FAIL line 245: slab leak after stop (5 free)
+[00:00:06.433,000] <err> i2s_stm32_sai: HAL_SAI_Receive_DMA: <FAILED>
+[00:00:06.440,000] <err> i2s_stm32_sai: START trigger failed -5
+  FAIL line 684: rx start -5
+  FAIL line 687: rx drop 0
+[00:00:06.506,000] <err> i2s_stm32_sai: HAL_SAI_Receive_DMA: <FAILED>
+[00:00:06.513,000] <err> i2s_stm32_sai: START trigger failed -5
+  FAIL line 689: rx start after drop -5
+[00:00:07.523,000] <err> i2s_stm32_sai: RX queue: 0
+  FAIL line 606: after drop: read -11 at block 0 (0 errors so far)
+[00:00:07.534,000] <err> i2s_stm32_sai: PREPARE - invalid state: 1
+[00:00:08.552,000] <err> i2s_stm32_sai: RX queue: 0
+  FAIL line 245: slab leak after stop (3 free)
+  FAIL line 694: writer error -5 after 0 blocks
+  FAIL line 695: tx slab not returned (7 free)
+LOOPBACK ws=24
+[00:00:09.122,000] <wrn> i2s_stm32_sai: Synchronous RX peripheral mode requires an active controller with bit clock gating disabled
+[00:00:09.134,000] <err> i2s_stm32_sai: HAL_SAI_Transmit_DMA: <FAILED>
+[00:00:09.141,000] <err> i2s_stm32_sai: START trigger failed -5
+[00:00:09.168,000] <err> i2s_stm32_sai: HAL_SAI_Receive_DMA: <FAILED>
+[00:00:09.175,000] <err> i2s_stm32_sai: START trigger failed -5
+  FAIL line 677: rx start -5
+[00:00:10.184,000] <err> i2s_stm32_sai: RX queue: 0
+  FAIL line 606: round 0: read -11 at block 0 (0 errors so far)
+[00:00:10.195,000] <err> i2s_stm32_sai: PREPARE - invalid state: 1
+[00:00:11.212,000] <err> i2s_stm32_sai: RX queue: 0
+  FAIL line 245: slab leak after stop (2 free)
+[00:00:11.271,000] <err> i2s_stm32_sai: HAL_SAI_Receive_DMA: <FAILED>
+[00:00:11.278,000] <err> i2s_stm32_sai: START trigger failed -5
+  FAIL line 677: rx start -5
+[00:00:12.287,000] <err> i2s_stm32_sai: RX queue: 0
+  FAIL line 606: round 1: read -11 at block 0 (0 errors so far)
+[00:00:12.298,000] <err> i2s_stm32_sai: PREPARE - invalid state: 1
+[00:00:13.315,000] <err> i2s_stm32_sai: RX queue: 0
+  FAIL line 245: slab leak after stop (1 free)
+[00:00:13.375,000] <err> i2s_stm32_sai: HAL_SAI_Receive_DMA: <FAILED>
+[00:00:13.382,000] <err> i2s_stm32_sai: START trigger failed -5
+  FAIL line 677: rx start -5
+[00:00:14.392,000] <err> i2s_stm32_sai: RX queue: 0
+  FAIL line 606: round 2: read -11 at block 0 (0 errors so far)
+[00:00:14.403,000] <err> i2s_stm32_sai: PREPARE - invalid state: 1
+[00:00:15.420,000] <err> i2s_stm32_sai: RX queue: 0
+  FAIL line 245: slab leak after stop (0 free)
+[00:00:15.479,000] <err> i2s_stm32_sai: START trigger failed -12
+  FAIL line 684: rx start -12
+  FAIL line 687: rx drop 0
+[00:00:15.547,000] <err> i2s_stm32_sai: START trigger failed -12
+  FAIL line 689: rx start after drop -12
+[00:00:16.557,000] <err> i2s_stm32_sai: RX queue: 0
+  FAIL line 606: after drop: read -11 at block 0 (0 errors so far)
+[00:00:16.568,000] <err> i2s_stm32_sai: PREPARE - invalid state: 1
+[00:00:17.585,000] <err> i2s_stm32_sai: RX queue: 0
+  FAIL line 245: slab leak after stop (0 free)
+  FAIL line 694: writer error -5 after 0 blocks
+  FAIL line 695: tx slab not returned (6 free)
+LOOPBACK ws=32
+[00:00:18.154,000] <wrn> i2s_stm32_sai: Synchronous RX peripheral mode requires an active controller with bit clock gating disabled
+[00:00:18.167,000] <err> i2s_stm32_sai: HAL_SAI_Transmit_DMA: <FAILED>
+[00:00:18.174,000] <err> i2s_stm32_sai: START trigger failed -5
+[00:00:18.201,000] <err> i2s_stm32_sai: START trigger failed -12
+  FAIL line 677: rx start -12
+[00:00:19.210,000] <err> i2s_stm32_sai: RX queue: 0
+  FAIL line 606: round 0: read -11 at block 0 (0 errors so far)
+[00:00:19.221,000] <err> i2s_stm32_sai: PREPARE - invalid state: 1
+[00:00:20.238,000] <err> i2s_stm32_sai: RX queue: 0
+  FAIL line 245: slab leak after stop (0 free)
+[00:00:20.297,000] <err> i2s_stm32_sai: START trigger failed -12
+  FAIL line 677: rx start -12
+[00:00:21.306,000] <err> i2s_stm32_sai: RX queue: 0
+  FAIL line 606: round 1: read -11 at block 0 (0 errors so far)
+[00:00:21.317,000] <err> i2s_stm32_sai: PREPARE - invalid state: 1
+[00:00:22.334,000] <err> i2s_stm32_sai: RX queue: 0
+  FAIL line 245: slab leak after stop (0 free)
+[00:00:22.393,000] <err> i2s_stm32_sai: START trigger failed -12
+  FAIL line 677: rx start -12
+[00:00:23.402,000] <err> i2s_stm32_sai: RX queue: 0
+  FAIL line 606: round 2: read -11 at block 0 (0 errors so far)
+[00:00:23.413,000] <err> i2s_stm32_sai: PREPARE - invalid state: 1
+[00:00:24.430,000] <err> i2s_stm32_sai: RX queue: 0
+  FAIL line 245: slab leak after stop (0 free)
+[00:00:24.490,000] <err> i2s_stm32_sai: START trigger failed -12
+  FAIL line 684: rx start -12
+  FAIL line 687: rx drop 0
+[00:00:24.557,000] <err> i2s_stm32_sai: START trigger failed -12
+  FAIL line 689: rx start after drop -12
+[00:00:25.568,000] <err> i2s_stm32_sai: RX queue: 0
+  FAIL line 606: after drop: read -11 at block 0 (0 errors so far)
+[00:00:25.579,000] <err> i2s_stm32_sai: PREPARE - invalid state: 1
+[00:00:26.596,000] <err> i2s_stm32_sai: RX queue: 0
+  FAIL line 245: slab leak after stop (0 free)
+  FAIL line 694: writer error -5 after 0 blocks
+  FAIL line 695: tx slab not returned (5 free)
+RESULT: FAIL (4 passed, 49 failed)

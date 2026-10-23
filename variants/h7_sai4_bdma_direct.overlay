@@ -1,0 +1,14 @@
+/*
+ * Copyright (c) 2026 Mario Paja
+ *
+ * SPDX-License-Identifier: Apache-2.0
+ */
+
+/* Variant of h7_sai4_bdma.overlay: SAI4 references BDMA1 directly instead of DMAMUX2 */
+&sai4_a {
+	dmas = <&bdma1 0 15 (STM32_DMA_16BITS | STM32_DMA_PRIORITY_HIGH)>;
+};
+
+&sai4_b {
+	dmas = <&bdma1 1 16 (STM32_DMA_16BITS | STM32_DMA_PRIORITY_HIGH)>;
+};

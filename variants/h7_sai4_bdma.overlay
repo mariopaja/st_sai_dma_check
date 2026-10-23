@@ -1,0 +1,91 @@
+/*
+ * Copyright (c) 2026 Mario Paja
+ *
+ * SPDX-License-Identifier: Apache-2.0
+ */
+
+/*
+ * NUCLEO-H745ZI-Q (M7): SAI4 on BDMA through DMAMUX2. SAI4 is not described in
+ * stm32h745.dtsi, so the node is added here. Pins are the SAI1 ones (PE2-PE6,
+ * PF8-PF9) on SAI4 alternate functions, so SAI1 is disabled.
+ */
+
+#include <zephyr/dt-bindings/dma/stm32_dma.h>
+#include <zephyr/dt-bindings/memory-attr/memory-attr-arm.h>
+
+/ {
+	aliases {
+		i2s-tx = &sai4_a;
+		i2s-rx = &sai4_b;
+	};
+
+	zephyr,user {
+		/* BDMA only reaches the D3 domain SRAM4 */
+		slab-memory-region = <&sram4>;
+	};
+};
+
+&{/soc} {
+	sai4: sai4@58005400 {
+		compatible = "st,stm32-sai";
+		#address-cells = <1>;
+		#size-cells = <1>;
+		reg = <0x58005400 0x400>;
+		ranges;
+		clocks = <&rcc STM32_CLOCK(APB4, 21)>,
+			 <&rcc STM32_SRC_PLL2_P SAI4A_SEL(1)>,
+			 <&rcc STM32_SRC_PLL2_P SAI4B_SEL(1)>;
+		clock-names = "sai_ck", "sai_ker_ck", "sai_b_ker_ck";
+		status = "okay";
+
+		sai4_a: sai4a@58005404 {
+			reg = <0x58005404 0x20>;
+			dmas = <&dmamux2 0 15 (STM32_DMA_16BITS | STM32_DMA_PRIORITY_HIGH)>;
+			dma-names = "tx";
+			pinctrl-0 = <&sai4_mclk_a_pe2 &sai4_sd_a_pe6 &sai4_fs_a_pe4 &sai4_sck_a_pe5>;
+			pinctrl-names = "default";
+			mclk-enable;
+			mclk-divider = "div-256";
+			#address-cells = <1>;
+			#size-cells = <0>;
+			status = "okay";
+		};
+
+		sai4_b: sai4b@58005424 {
+			reg = <0x58005424 0x20>;
+			dmas = <&dmamux2 1 16 (STM32_DMA_16BITS | STM32_DMA_PRIORITY_HIGH)>;
+			dma-names = "rx";
+			pinctrl-0 = <&sai4_sd_b_pe3 &sai4_fs_b_pf9 &sai4_sck_b_pf8>;
+			pinctrl-names = "default";
+			mclk-divider = "div-256";
+			#address-cells = <1>;
+			#size-cells = <0>;
+			status = "okay";
+		};
+	};
+};
+
+&sai1 {
+	status = "disabled";
+};
+
+&sai1_a {
+	status = "disabled";
+};
+
+&sai1_b {
+	status = "disabled";
+};
+
+/* The BDMA driver expects the SRAM4 region to be non-cachable */
+&sram4 {
+	zephyr,memory-attr = <DT_MEM_ARM(ATTR_MPU_RAM_NOCACHE)>;
+};
+
+&bdma1 {
+	status = "okay";
+};
+
+&dmamux2 {
+	status = "okay";
+};

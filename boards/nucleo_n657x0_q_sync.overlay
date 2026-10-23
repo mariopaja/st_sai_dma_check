@@ -1,0 +1,11 @@
+/*
+ * Copyright (c) 2026 Mario Paja
+ *
+ * SPDX-License-Identifier: Apache-2.0
+ */
+
+/* SAI2_B as synchronous RX slave of SAI2_A; loopback wire PF5 (SD_A) -> PE11 (SD_B, D7) */
+&sai2_b {
+	pinctrl-0 = <&sai2_sd_b_pe11>;
+	synchronous;
+};

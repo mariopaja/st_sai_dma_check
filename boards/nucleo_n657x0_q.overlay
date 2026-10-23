@@ -1,0 +1,70 @@
+/*
+ * Copyright (c) 2026 Mario Paja
+ *
+ * SPDX-License-Identifier: Apache-2.0
+ */
+
+/ {
+	aliases {
+		i2s-tx = &sai2_a;
+		i2s-rx = &sai2_b;
+	};
+
+	/*
+	 * Pins sampled through GPIO IDR; they stay in SAI alternate function.
+	 * No MCLK probe: IDR polling does not see the 11.3 MHz MCLK on this SoC
+	 * (always reads 0), although a logic analyser shows it on PE14.
+	 */
+	zephyr,user {
+		sai-fs-gpios = <&gpiog 13 0>;
+	};
+};
+
+&pll2 {
+	clocks = <&clk_hse>;
+	div-m = <3>;
+	mul-n = <79>;
+	div-p1 = <1>;
+	div-p2 = <1>;
+	status = "okay";
+};
+
+&ic7 {
+	pll-src = <2>;
+	ic-div = <28>;
+	status = "okay";
+};
+
+&gpdma1 {
+	status = "okay";
+};
+
+/* 44.084KHz (-0.03% Error) */
+&sai2 {
+	status = "okay";
+	clocks = <&rcc STM32_CLOCK(APB2, 22)>,
+		 <&rcc STM32_SRC_IC7 SAI2_SEL(2)>;
+	clock-names = "sai_ck", "sai_ker_ck";
+};
+
+&sai2_a {
+	pinctrl-0 = <&sai2_mclk_a_pe0 &sai2_sd_a_pf5 &sai2_fs_a_pg13 &sai2_sck_a_pd13>;
+	pinctrl-names = "default";
+	status = "okay";
+	mclk-enable;
+	mclk-divider = "div-256";
+	dma-names = "tx";
+};
+
+&sai2_b {
+	pinctrl-0 = <&sai2_sd_b_pe11 &sai2_fs_b_pe13 &sai2_sck_b_pe12>;
+	pinctrl-names = "default";
+	status = "okay";
+	mclk-divider = "div-256";
+	dma-names = "rx";
+};
+
+/* SAI2_B FS (PE13) and SCK (PE12) conflict with I2C4 */
+&i2c4 {
+	status = "disabled";
+};

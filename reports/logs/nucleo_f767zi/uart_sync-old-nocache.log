@@ -1,0 +1,89 @@
+*** Booting Zephyr OS build v4.5.0-rc2-403-gb70dbaf045e0 ***
+SAI DMA hw test (sync loopback), slabs 0x20021000/0x20020000 (nocache)
+LOOPBACK ws=16
+[00:00:00.012,000] <wrn> i2s_stm32_sai: Synchronous RX peripheral mode requires an active controller with bit clock gating disabled
+  round 0: 12800 samples checked, 0 skipped before lock, 0 errors, 12800 L/R swapped
+  FAIL line 647: round 0: locked=1 errors=0 swapped=12800 skipped=0
+  round 1: 12800 samples checked, 0 skipped before lock, 1 errors, 12800 L/R swapped
+    block 0 sample 8: counter 16659, expected 14711 (+1948)
+  FAIL line 647: round 1: locked=1 errors=1 swapped=12800 skipped=0
+  round 2: 12800 samples checked, 0 skipped before lock, 1 errors, 12800 L/R swapped
+    block 0 sample 8: counter 31997, expected 29587 (+2410)
+  FAIL line 647: round 2: locked=1 errors=1 swapped=12800 skipped=0
+  FAIL line 681: rx drop 0
+  after drop: 12800 samples checked, 0 skipped before lock, 1 errors, 12800 L/R swapped
+    block 0 sample 8: counter 52473, expected 47853 (+4620)
+  FAIL line 647: after drop: locked=1 errors=1 swapped=12800 skipped=0
+[00:00:01.791,000] <err> i2s_stm32_sai: RX queue: 0
+  FAIL line 239: slab leak after stop (7 free)
+LOOPBACK ws=24
+[00:00:01.861,000] <wrn> i2s_stm32_sai: Synchronous RX peripheral mode requires an active controller with bit clock gating disabled
+  round 0: 12673 samples checked, 127 skipped before lock, 12672 errors, 6337 L/R swapped
+    block 1 sample 0: counter 10720921, expected 12818011 (-2097090)
+    block 1 sample 1: counter 10655385, expected 10720922 (-65537)
+    block 1 sample 2: counter 10851993, expected 10655386 (+196607)
+    block 1 sample 3: counter 10786457, expected 10851994 (-65537)
+  FAIL line 647: round 0: locked=1 errors=12672 swapped=6337 skipped=127
+[00:00:03.087,000] <err> i2s_stm32_sai: RX queue: 0
+  FAIL line 239: slab leak after stop (7 free)
+  round 1: 12673 samples checked, 127 skipped before lock, 12672 errors, 6337 L/R swapped
+    block 1 sample 0: counter 3774104, expected 12818011 (-9043907)
+    block 1 sample 1: counter 3708568, expected 3774105 (-65537)
+    block 1 sample 2: counter 3905176, expected 3708569 (+196607)
+    block 1 sample 3: counter 3839640, expected 3905177 (-65537)
+  FAIL line 647: round 1: locked=1 errors=12672 swapped=6337 skipped=127
+[00:00:04.339,000] <err> i2s_stm32_sai: RX queue: 0
+  FAIL line 239: slab leak after stop (7 free)
+  round 2: 12673 samples checked, 127 skipped before lock, 12672 errors, 6337 L/R swapped
+    block 1 sample 0: counter 10655386, expected 12818011 (-2162625)
+    block 1 sample 1: counter 10851994, expected 10655387 (+196607)
+    block 1 sample 2: counter 10786458, expected 10851995 (-65537)
+    block 1 sample 3: counter 10983066, expected 10786459 (+196607)
+  FAIL line 647: round 2: locked=1 errors=12672 swapped=6337 skipped=127
+[00:00:05.591,000] <err> i2s_stm32_sai: RX queue: 0
+  FAIL line 239: slab leak after stop (7 free)
+  FAIL line 681: rx drop 0
+  after drop: 12673 samples checked, 127 skipped before lock, 12672 errors, 6337 L/R swapped
+    block 1 sample 0: counter 3446428, expected 12818011 (-9371583)
+    block 1 sample 1: counter 3643036, expected 3446429 (+196607)
+    block 1 sample 2: counter 3577500, expected 3643037 (-65537)
+    block 1 sample 3: counter 2725532, expected 3577501 (-851969)
+  FAIL line 647: after drop: locked=1 errors=12672 swapped=6337 skipped=127
+[00:00:06.901,000] <err> i2s_stm32_sai: RX queue: 0
+  FAIL line 239: slab leak after stop (6 free)
+LOOPBACK ws=32
+[00:00:06.971,000] <wrn> i2s_stm32_sai: Synchronous RX peripheral mode requires an active controller with bit clock gating disabled
+  round 0: 12673 samples checked, 127 skipped before lock, 12672 errors, 6337 L/R swapped
+    block 1 sample 0: counter 882979737, expected 2781058651 (-1898078914)
+    block 1 sample 1: counter 882914201, expected 882979738 (-65537)
+    block 1 sample 2: counter 883110809, expected 882914202 (+196607)
+    block 1 sample 3: counter 883045273, expected 883110810 (-65537)
+  FAIL line 647: round 0: locked=1 errors=12672 swapped=6337 skipped=127
+[00:00:08.198,000] <err> i2s_stm32_sai: RX queue: 0
+  FAIL line 239: slab leak after stop (6 free)
+  round 1: 12673 samples checked, 127 skipped before lock, 12672 errors, 6337 L/R swapped
+    block 1 sample 0: counter 2332439448, expected 2781058651 (-448619203)
+    block 1 sample 1: counter 2335781784, expected 2332439449 (+3342335)
+    block 1 sample 2: counter 2335716248, expected 2335781785 (-65537)
+    block 1 sample 3: counter 2335912856, expected 2335716249 (+196607)
+  FAIL line 647: round 1: locked=1 errors=12672 swapped=6337 skipped=127
+[00:00:09.451,000] <err> i2s_stm32_sai: RX queue: 0
+  FAIL line 239: slab leak after stop (6 free)
+  round 2: 12673 samples checked, 127 skipped before lock, 12672 errors, 6337 L/R swapped
+    block 1 sample 0: counter 1505244058, expected 2781058651 (-1275814593)
+    block 1 sample 1: counter 1505440666, expected 1505244059 (+196607)
+    block 1 sample 2: counter 1505375130, expected 1505440667 (-65537)
+    block 1 sample 3: counter 1505571738, expected 1505375131 (+196607)
+  FAIL line 647: round 2: locked=1 errors=12672 swapped=6337 skipped=127
+[00:00:10.704,000] <err> i2s_stm32_sai: RX queue: 0
+  FAIL line 239: slab leak after stop (6 free)
+  FAIL line 681: rx drop 0
+  after drop: 12673 samples checked, 127 skipped before lock, 12672 errors, 6337 L/R swapped
+    block 1 sample 0: counter 58733468, expected 2781058651 (+1572642113)
+    block 1 sample 1: counter 58930076, expected 58733469 (+196607)
+    block 1 sample 2: counter 58864540, expected 58930077 (-65537)
+    block 1 sample 3: counter 59061148, expected 58864541 (+196607)
+  FAIL line 647: after drop: locked=1 errors=12672 swapped=6337 skipped=127
+[00:00:12.016,000] <err> i2s_stm32_sai: RX queue: 0
+  FAIL line 239: slab leak after stop (5 free)
+RESULT: FAIL (41 passed, 24 failed)

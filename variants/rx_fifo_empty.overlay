@@ -1,0 +1,10 @@
+/*
+ * Copyright (c) 2026 Mario Paja
+ *
+ * SPDX-License-Identifier: Apache-2.0
+ */
+
+/* RX DMA request as soon as the FIFO holds one word (maximum headroom) */
+&sai1_b {
+	fifo-threshold = "empty";
+};

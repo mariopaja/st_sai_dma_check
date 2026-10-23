@@ -1,0 +1,23 @@
+*** Booting Zephyr OS build v4.5.0-rc2-404-g3a2a6ecfead0 ***
+SAI DMA hw test (async), slabs 0x3418f660/0x3418e660 (nocache)
+PINS ws=16 gated=1
+  FS idle after configure: 0 Hz
+  FS streaming: 44000 Hz
+  DIAG CR1=0x08430280 MCKEN=1 SAIEN=1 NODIV=0 MCKDIV=4 OSR=0 CR2=0x00000004 GCR=0x00000000
+  DIAG MCLK pin 0: MODER=2 AF=10 OSPEEDR=0 OTYPER=0 PUPDR=0 IDR=0
+  MCLK streaming: 0 edges, 0 high / 32258 low samples
+  FAIL line 368: MCLK not toggling while streaming (0 edges)
+  FS after drop: 0 Hz
+  MCLK after drop: 0 edges
+  FAIL line 390: MCLK stopped although MCKEN keeps it running (0 edges)
+PINS ws=16 gated=0
+  FS idle after configure: 44000 Hz
+  FS streaming: 44200 Hz
+  DIAG CR1=0x08430280 MCKEN=1 SAIEN=1 NODIV=0 MCKDIV=4 OSR=0 CR2=0x00000004 GCR=0x00000000
+  DIAG MCLK pin 0: MODER=2 AF=10 OSPEEDR=0 OTYPER=0 PUPDR=0 IDR=0
+  MCLK streaming: 0 edges, 0 high / 32258 low samples
+  FAIL line 368: MCLK not toggling while streaming (0 edges)
+  FS after drop: 44200 Hz
+  MCLK after drop: 0 edges
+  FAIL line 390: MCLK stopped although MCKEN keeps it running (0 edges)
+RESULT: FAIL (22 passed, 4 failed)

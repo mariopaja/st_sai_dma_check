@@ -1,0 +1,75 @@
+*** Booting Zephyr OS build v4.5.0-rc2-404-g209d616fbc7f ***
+SAI DMA hw test (async), slabs 0x20021000/0x20020000 (nocache)
+TX ws=16 gated=1
+  stream 300 blocks: 434 ms
+RX ws=16 gated=1
+  stream 300 blocks: 434 ms
+[00:00:01.011,000] <err> i2s_stm32_sai: RX queue full
+[00:00:01.054,000] <err> i2s_stm32_sai: RX invalid state: 4
+TX ws=24 gated=1
+  stream 300 blocks: 434 ms
+RX ws=24 gated=1
+  stream 300 blocks: 434 ms
+[00:00:02.063,000] <err> i2s_stm32_sai: RX queue full
+[00:00:02.106,000] <err> i2s_stm32_sai: RX invalid state: 4
+TX ws=32 gated=1
+  stream 300 blocks: 434 ms
+RX ws=32 gated=1
+  stream 300 blocks: 433 ms
+[00:00:03.115,000] <err> i2s_stm32_sai: RX queue full
+[00:00:03.157,000] <err> i2s_stm32_sai: RX invalid state: 4
+PINS ws=16 gated=1
+  FS idle after configure: 0 Hz
+  FS streaming: 44200 Hz
+  MCLK streaming: 2751 edges, 7293 high / 3769 low samples
+  FS after drop: 0 Hz
+  MCLK after drop: 0 edges
+PINS ws=32 gated=1
+  FS idle after configure: 0 Hz
+  FS streaming: 44200 Hz
+  MCLK streaming: 2757 edges, 7229 high / 3820 low samples
+  FS after drop: 0 Hz
+  MCLK after drop: 0 edges
+TX+RX ws=16 gated=1
+  rx 300 blocks: 434 ms, tx 300 blocks: 434 ms
+TX+RX ws=24 gated=1
+  rx 300 blocks: 434 ms, tx 300 blocks: 434 ms
+TX+RX ws=32 gated=1
+  rx 300 blocks: 434 ms, tx 300 blocks: 434 ms
+TX ws=16 gated=0
+  stream 300 blocks: 434 ms
+RX ws=16 gated=0
+  stream 300 blocks: 433 ms
+[00:00:05.600,000] <err> i2s_stm32_sai: RX queue full
+[00:00:05.643,000] <err> i2s_stm32_sai: RX invalid state: 4
+TX ws=24 gated=0
+  stream 300 blocks: 434 ms
+RX ws=24 gated=0
+  stream 300 blocks: 434 ms
+[00:00:06.651,000] <err> i2s_stm32_sai: RX queue full
+[00:00:06.694,000] <err> i2s_stm32_sai: RX invalid state: 4
+TX ws=32 gated=0
+  stream 300 blocks: 434 ms
+RX ws=32 gated=0
+  stream 300 blocks: 434 ms
+[00:00:07.702,000] <err> i2s_stm32_sai: RX queue full
+[00:00:07.745,000] <err> i2s_stm32_sai: RX invalid state: 4
+PINS ws=16 gated=0
+  FS idle after configure: 44200 Hz
+  FS streaming: 44400 Hz
+  MCLK streaming: 2761 edges, 7188 high / 3852 low samples
+  FS after drop: 44200 Hz
+  MCLK after drop: 2757 edges
+PINS ws=32 gated=0
+  FS idle after configure: 44200 Hz
+  FS streaming: 44400 Hz
+  MCLK streaming: 2767 edges, 7112 high / 3913 low samples
+  FS after drop: 44200 Hz
+  MCLK after drop: 5333 edges
+TX+RX ws=16 gated=0
+  rx 300 blocks: 433 ms, tx 300 blocks: 433 ms
+TX+RX ws=24 gated=0
+  rx 300 blocks: 434 ms, tx 300 blocks: 434 ms
+TX+RX ws=32 gated=0
+  rx 300 blocks: 434 ms, tx 300 blocks: 434 ms
+RESULT: PASS (1064 passed, 0 failed)

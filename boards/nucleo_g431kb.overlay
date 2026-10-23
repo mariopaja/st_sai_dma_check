@@ -1,0 +1,54 @@
+/*
+ * Copyright (c) 2026 Mario Paja
+ *
+ * SPDX-License-Identifier: Apache-2.0
+ */
+
+/ {
+	aliases {
+		i2s-tx = &sai1_a;
+		i2s-rx = &sai1_b;
+	};
+
+	/* Pins sampled through GPIO IDR; they stay in SAI alternate function */
+	zephyr,user {
+		sai-fs-gpios = <&gpioa 9 0>;
+	};
+};
+
+&pll {
+	/* 44.1KHz (-0.03% Error) */
+	div-q = <8>;
+};
+
+&sai1 {
+	status = "okay";
+};
+
+&sai1_a {
+	pinctrl-0 = <&sai1_sd_a_pa10 &sai1_fs_a_pa9 &sai1_sck_a_pa8>;
+	pinctrl-names = "default";
+	status = "okay";
+	mclk-divider = "div-256";
+	dma-names = "tx";
+};
+
+&sai1_b {
+	pinctrl-0 = <&sai1_sd_b_pb5 &sai1_fs_b_pb6 &sai1_sck_b_pb3>;
+	pinctrl-names = "default";
+	status = "okay";
+	mclk-divider = "div-256";
+	dma-names = "rx";
+};
+
+&dma1 {
+	status = "okay";
+};
+
+&dmamux1 {
+	status = "okay";
+};
+
+&i2c2 {
+	status = "disabled";
+};

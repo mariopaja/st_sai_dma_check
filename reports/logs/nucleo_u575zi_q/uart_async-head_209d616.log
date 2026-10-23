@@ -1,0 +1,81 @@
+*** Booting Zephyr OS build v4.5.0-rc2-404-g209d616fbc7f ***
+SAI DMA hw test (async)
+TX ws=16 gated=1
+  stream 300 blocks: 435 ms
+RX ws=16 gated=1
+  stream 300 blocks: 436 ms
+[00:00:01.999,000] <err> i2s_stm32_sai: RX queue: 0
+  FAIL line 493: read after drop rounds -11
+[00:00:02.015,000] <err> i2s_stm32_sai: RX queue full
+[00:00:02.058,000] <err> i2s_stm32_sai: RX invalid state: 4
+TX ws=24 gated=1
+  stream 300 blocks: 436 ms
+RX ws=24 gated=1
+  stream 300 blocks: 435 ms
+[00:00:04.058,000] <err> i2s_stm32_sai: RX queue: 0
+  FAIL line 493: read after drop rounds -11
+[00:00:04.075,000] <err> i2s_stm32_sai: RX queue full
+[00:00:04.117,000] <err> i2s_stm32_sai: RX invalid state: 4
+TX ws=32 gated=1
+  stream 300 blocks: 435 ms
+RX ws=32 gated=1
+  stream 300 blocks: 435 ms
+[00:00:06.117,000] <err> i2s_stm32_sai: RX queue: 0
+  FAIL line 493: read after drop rounds -11
+[00:00:06.134,000] <err> i2s_stm32_sai: RX queue full
+[00:00:06.177,000] <err> i2s_stm32_sai: RX invalid state: 4
+PINS ws=16 gated=1
+  FS idle after configure: 0 Hz
+  FS streaming: 44000 Hz
+  MCLK streaming: 1233 edges, 3538 high / 4346 low samples
+  FS after drop: 0 Hz
+  MCLK after drop: 1225 edges
+PINS ws=32 gated=1
+  FS idle after configure: 0 Hz
+  FS streaming: 44000 Hz
+  MCLK streaming: 1233 edges, 3550 high / 4334 low samples
+  FS after drop: 0 Hz
+  MCLK after drop: 1227 edges
+TX+RX ws=16 gated=1
+  rx 300 blocks: 436 ms, tx 300 blocks: 436 ms
+TX+RX ws=24 gated=1
+  rx 300 blocks: 435 ms, tx 300 blocks: 435 ms
+TX+RX ws=32 gated=1
+  rx 300 blocks: 435 ms, tx 300 blocks: 436 ms
+TX ws=16 gated=0
+  stream 300 blocks: 436 ms
+RX ws=16 gated=0
+  stream 300 blocks: 436 ms
+[00:00:08.630,000] <err> i2s_stm32_sai: RX queue full
+[00:00:08.673,000] <err> i2s_stm32_sai: RX invalid state: 4
+TX ws=24 gated=0
+  stream 300 blocks: 436 ms
+RX ws=24 gated=0
+  stream 300 blocks: 436 ms
+[00:00:09.686,000] <err> i2s_stm32_sai: RX queue full
+[00:00:09.728,000] <err> i2s_stm32_sai: RX invalid state: 4
+TX ws=32 gated=0
+  stream 300 blocks: 435 ms
+RX ws=32 gated=0
+  stream 300 blocks: 435 ms
+[00:00:10.741,000] <err> i2s_stm32_sai: RX queue full
+[00:00:10.784,000] <err> i2s_stm32_sai: RX invalid state: 4
+PINS ws=16 gated=0
+  FS idle after configure: 44000 Hz
+  FS streaming: 44200 Hz
+  MCLK streaming: 1233 edges, 3537 high / 4347 low samples
+  FS after drop: 44000 Hz
+  MCLK after drop: 1228 edges
+PINS ws=32 gated=0
+  FS idle after configure: 44000 Hz
+  FS streaming: 44000 Hz
+  MCLK streaming: 1231 edges, 3517 high / 4367 low samples
+  FS after drop: 44000 Hz
+  MCLK after drop: 1227 edges
+TX+RX ws=16 gated=0
+  rx 300 blocks: 436 ms, tx 300 blocks: 436 ms
+TX+RX ws=24 gated=0
+  rx 300 blocks: 435 ms, tx 300 blocks: 435 ms
+TX+RX ws=32 gated=0
+  rx 300 blocks: 436 ms, tx 300 blocks: 436 ms
+RESULT: FAIL (1060 passed, 3 failed)

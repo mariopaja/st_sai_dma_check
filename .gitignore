@@ -1,0 +1,17 @@
+# Build output
+build/
+build_*/
+build-*/
+twister-out*/
+
+# Captures and images produced while testing
+*.raw
+*.hex
+*.bin
+*.elf
+
+# Editors
+.vscode/
+.idea/
+*.swp
+*~

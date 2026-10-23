@@ -1,0 +1,35 @@
+/*
+ * Copyright (c) 2026 Mario Paja
+ *
+ * SPDX-License-Identifier: Apache-2.0
+ */
+
+/*
+ * NUCLEO-N657X0-Q: swap the SAI2 roles so that TX can drive MCLK on PE14
+ * (SAI2_A has MCLK only on PE0). TX = SAI2_B, RX = SAI2_A. The data line is
+ * still PE11 <-> PF5, now driven from PE11 (SAI2_SD_B) into PF5 (SAI2_SD_A).
+ */
+
+/ {
+	aliases {
+		i2s-tx = &sai2_b;
+		i2s-rx = &sai2_a;
+	};
+
+	/* No MCLK probe, see boards/nucleo_n657x0_q.overlay */
+	zephyr,user {
+		sai-fs-gpios = <&gpioe 13 0>;
+	};
+};
+
+&sai2_a {
+	pinctrl-0 = <&sai2_sd_a_pf5 &sai2_fs_a_pg13 &sai2_sck_a_pd13>;
+	/delete-property/ mclk-enable;
+	dma-names = "rx";
+};
+
+&sai2_b {
+	pinctrl-0 = <&sai2_mclk_b_pe14 &sai2_sd_b_pe11 &sai2_fs_b_pe13 &sai2_sck_b_pe12>;
+	mclk-enable;
+	dma-names = "tx";
+};

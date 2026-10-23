@@ -1,0 +1,67 @@
+*** Booting Zephyr OS build v4.5.0-rc2-404-g3a2a6ecfead0 ***
+SAI DMA hw test (async), slabs 0x341907c0/0x3418f7c0 (nocache)
+TX ws=16 gated=1
+  stream 300 blocks: 436 ms
+RX ws=16 gated=1
+  stream 300 blocks: 435 ms
+[00:00:01.015,000] <err> i2s_stm32_sai: RX queue full
+[00:00:01.057,000] <err> i2s_stm32_sai: RX invalid state: 4
+TX ws=24 gated=1
+  stream 300 blocks: 436 ms
+RX ws=24 gated=1
+  stream 300 blocks: 436 ms
+[00:00:02.069,000] <err> i2s_stm32_sai: RX queue full
+[00:00:02.112,000] <err> i2s_stm32_sai: RX invalid state: 4
+TX ws=32 gated=1
+  stream 300 blocks: 436 ms
+RX ws=32 gated=1
+  stream 300 blocks: 435 ms
+[00:00:03.124,000] <err> i2s_stm32_sai: RX queue full
+[00:00:03.166,000] <err> i2s_stm32_sai: RX invalid state: 4
+PINS ws=16 gated=1
+  FS idle after configure: 0 Hz
+  FS streaming: 44000 Hz
+  FS after drop: 0 Hz
+PINS ws=32 gated=1
+  FS idle after configure: 0 Hz
+  FS streaming: 44000 Hz
+  FS after drop: 0 Hz
+TX+RX ws=16 gated=1
+  rx 300 blocks: 435 ms, tx 300 blocks: 435 ms
+TX+RX ws=24 gated=1
+  rx 300 blocks: 436 ms, tx 300 blocks: 436 ms
+TX+RX ws=32 gated=1
+  rx 300 blocks: 436 ms, tx 300 blocks: 436 ms
+TX ws=16 gated=0
+  stream 300 blocks: 436 ms
+RX ws=16 gated=0
+  stream 300 blocks: 435 ms
+[00:00:05.583,000] <err> i2s_stm32_sai: RX queue full
+[00:00:05.626,000] <err> i2s_stm32_sai: RX invalid state: 4
+TX ws=24 gated=0
+  stream 300 blocks: 436 ms
+RX ws=24 gated=0
+  stream 300 blocks: 435 ms
+[00:00:06.637,000] <err> i2s_stm32_sai: RX queue full
+[00:00:06.680,000] <err> i2s_stm32_sai: RX invalid state: 4
+TX ws=32 gated=0
+  stream 300 blocks: 436 ms
+RX ws=32 gated=0
+  stream 300 blocks: 435 ms
+[00:00:07.691,000] <err> i2s_stm32_sai: RX queue full
+[00:00:07.734,000] <err> i2s_stm32_sai: RX invalid state: 4
+PINS ws=16 gated=0
+  FS idle after configure: 44000 Hz
+  FS streaming: 44200 Hz
+  FS after drop: 44000 Hz
+PINS ws=32 gated=0
+  FS idle after configure: 44000 Hz
+  FS streaming: 44000 Hz
+  FS after drop: 44000 Hz
+TX+RX ws=16 gated=0
+  rx 300 blocks: 435 ms, tx 300 blocks: 435 ms
+TX+RX ws=24 gated=0
+  rx 300 blocks: 436 ms, tx 300 blocks: 436 ms
+TX+RX ws=32 gated=0
+  rx 300 blocks: 435 ms, tx 300 blocks: 435 ms
+RESULT: PASS (1056 passed, 0 failed)

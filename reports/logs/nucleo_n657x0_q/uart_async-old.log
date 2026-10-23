@@ -1,0 +1,458 @@
+*** Booting Zephyr OS build v4.5.0-rc2-403-gb70dbaf045e0 ***
+SAI DMA hw test (async), slabs 0x34191a40/0x34190a40 (nocache)
+TX ws=16 gated=1
+  stream 300 blocks: 436 ms
+  FAIL line 450: slab leak after drop running r0 (7 free)
+  FAIL line 450: slab leak after drop running r1 (6 free)
+  FAIL line 450: slab leak after drop running r2 (5 free)
+  FAIL line 450: slab leak after drop running r3 (4 free)
+  FAIL line 450: slab leak after drop running r4 (3 free)
+  FAIL line 450: slab leak after drop running r5 (2 free)
+  FAIL line 450: slab leak after drop running r6 (1 free)
+  FAIL line 450: slab leak after drop running r7 (0 free)
+[00:00:06.319,000] <err> i2s_stm32_sai: START trigger failed -12
+  FAIL line 446: start -12 (round 8)
+  FAIL line 450: slab leak after drop running r8 (0 free)
+[00:00:08.436,000] <err> i2s_stm32_sai: START trigger failed -12
+  FAIL line 446: start -12 (round 9)
+  FAIL line 450: slab leak after drop running r9 (0 free)
+[00:00:10.552,000] <err> i2s_stm32_sai: START trigger failed -12
+  FAIL line 446: start -12 (round 10)
+  FAIL line 450: slab leak after drop running r10 (0 free)
+[00:00:12.669,000] <err> i2s_stm32_sai: START trigger failed -12
+  FAIL line 446: start -12 (round 11)
+  FAIL line 450: slab leak after drop running r11 (0 free)
+[00:00:14.786,000] <err> i2s_stm32_sai: START trigger failed -12
+  FAIL line 446: start -12 (round 12)
+  FAIL line 450: slab leak after drop running r12 (0 free)
+[00:00:16.903,000] <err> i2s_stm32_sai: START trigger failed -12
+  FAIL line 446: start -12 (round 13)
+  FAIL line 450: slab leak after drop running r13 (0 free)
+[00:00:19.020,000] <err> i2s_stm32_sai: START trigger failed -12
+  FAIL line 446: start -12 (round 14)
+  FAIL line 450: slab leak after drop running r14 (0 free)
+[00:00:21.137,000] <err> i2s_stm32_sai: START trigger failed -12
+  FAIL line 446: start -12 (round 15)
+  FAIL line 450: slab leak after drop running r15 (0 free)
+[00:00:23.255,000] <err> i2s_stm32_sai: START trigger failed -12
+  FAIL line 446: start -12 (round 16)
+  FAIL line 450: slab leak after drop running r16 (0 free)
+[00:00:25.372,000] <err> i2s_stm32_sai: START trigger failed -12
+  FAIL line 446: start -12 (round 17)
+  FAIL line 450: slab leak after drop running r17 (0 free)
+[00:00:27.489,000] <err> i2s_stm32_sai: START trigger failed -12
+  FAIL line 446: start -12 (round 18)
+  FAIL line 450: slab leak after drop running r18 (0 free)
+[00:00:29.607,000] <err> i2s_stm32_sai: START trigger failed -12
+  FAIL line 446: start -12 (round 19)
+  FAIL line 450: slab leak after drop running r19 (0 free)
+  FAIL line 457: write after drop rounds -11
+  FAIL line 457: write after drop rounds -11
+  FAIL line 457: write after drop rounds -11
+  FAIL line 457: write after drop rounds -11
+[00:00:31.740,000] <err> i2s_stm32_sai: START trigger failed -12
+[00:00:31.747,000] <err> i2s_stm32_sai: DRAIN - Invalid state: 1
+  FAIL line 462: start/drain after drop rounds -1
+  FAIL line 463: TX stalled after drop rounds (0 free)
+RX ws=16 gated=1
+  stream 300 blocks: 435 ms
+  FAIL line 500: slab leak after drop running r0 (7 free)
+  FAIL line 500: slab leak after drop running r1 (6 free)
+  FAIL line 500: slab leak after drop running r2 (5 free)
+  FAIL line 500: slab leak after drop running r3 (4 free)
+  FAIL line 500: slab leak after drop running r4 (3 free)
+  FAIL line 500: slab leak after drop running r5 (2 free)
+  FAIL line 500: slab leak after drop running r6 (1 free)
+  FAIL line 500: slab leak after drop running r7 (1 free)
+  FAIL line 500: slab leak after drop running r8 (1 free)
+  FAIL line 500: slab leak after drop running r9 (1 free)
+  FAIL line 500: slab leak after drop running r10 (1 free)
+  FAIL line 500: slab leak after drop running r11 (1 free)
+  FAIL line 500: slab leak after drop running r12 (1 free)
+  FAIL line 500: slab leak after drop running r13 (1 free)
+  FAIL line 500: slab leak after drop running r14 (1 free)
+  FAIL line 500: slab leak after drop running r15 (1 free)
+  FAIL line 500: slab leak after drop running r16 (1 free)
+  FAIL line 500: slab leak after drop running r17 (1 free)
+  FAIL line 500: slab leak after drop running r18 (1 free)
+  FAIL line 500: slab leak after drop running r19 (1 free)
+[00:00:33.462,000] <err> i2s_stm32_sai: RX invalid state: 4
+  FAIL line 508: read after drop rounds -5
+  FAIL line 510: drop after reads 0
+[00:00:33.575,000] <err> i2s_stm32_sai: RX invalid state: 4
+  FAIL line 520: slab leak after prepare (1 free)
+  FAIL line 527: final drop
+TX ws=24 gated=1
+  FAIL line 400: write -11
+[00:00:34.193,000] <err> i2s_stm32_sai: START trigger failed -12
+  FAIL line 402: start -12
+  FAIL line 407: stream write -11 at block 1
+[00:00:34.707,000] <err> i2s_stm32_sai: DRAIN - Invalid state: 1
+  FAIL line 412: drain -5
+  FAIL line 413: slab not returned after drain (0 free)
+  stream 300 blocks: 1018 ms
+  FAIL line 417: timing off
+[00:00:35.726,000] <err> i2s_stm32_sai: START trigger failed -12
+  FAIL line 422: restart after drain -11
+  FAIL line 423: slab not returned after underrun
+  FAIL line 428: prefill -11
+  FAIL line 428: prefill -11
+  FAIL line 428: prefill -11
+  FAIL line 428: prefill -11
+[00:00:37.851,000] <err> i2s_stm32_sai: START trigger failed -12
+  FAIL line 431: start -12
+[00:00:37.860,000] <err> i2s_stm32_sai: STOP - Invalid state: 1
+  FAIL line 433: stop -5
+  FAIL line 437: slab leak after stop+drop (0 free)
+[00:00:39.994,000] <err> i2s_stm32_sai: START trigger failed -12
+  FAIL line 446: start -12 (round 0)
+  FAIL line 450: slab leak after drop running r0 (0 free)
+[00:00:42.110,000] <err> i2s_stm32_sai: START trigger failed -12
+  FAIL line 446: start -12 (round 1)
+  FAIL line 450: slab leak after drop running r1 (0 free)
+[00:00:44.226,000] <err> i2s_stm32_sai: START trigger failed -12
+  FAIL line 446: start -12 (round 2)
+  FAIL line 450: slab leak after drop running r2 (0 free)
+[00:00:46.342,000] <err> i2s_stm32_sai: START trigger failed -12
+  FAIL line 446: start -12 (round 3)
+  FAIL line 450: slab leak after drop running r3 (0 free)
+[00:00:48.458,000] <err> i2s_stm32_sai: START trigger failed -12
+  FAIL line 446: start -12 (round 4)
+  FAIL line 450: slab leak after drop running r4 (0 free)
+[00:00:50.574,000] <err> i2s_stm32_sai: START trigger failed -12
+  FAIL line 446: start -12 (round 5)
+  FAIL line 450: slab leak after drop running r5 (0 free)
+[00:00:52.690,000] <err> i2s_stm32_sai: START trigger failed -12
+  FAIL line 446: start -12 (round 6)
+  FAIL line 450: slab leak after drop running r6 (0 free)
+[00:00:54.806,000] <err> i2s_stm32_sai: START trigger failed -12
+  FAIL line 446: start -12 (round 7)
+  FAIL line 450: slab leak after drop running r7 (0 free)
+[00:00:56.923,000] <err> i2s_stm32_sai: START trigger failed -12
+  FAIL line 446: start -12 (round 8)
+  FAIL line 450: slab leak after drop running r8 (0 free)
+[00:00:59.039,000] <err> i2s_stm32_sai: START trigger failed -12
+  FAIL line 446: start -12 (round 9)
+  FAIL line 450: slab leak after drop running r9 (0 free)
+[00:01:01.156,000] <err> i2s_stm32_sai: START trigger failed -12
+  FAIL line 446: start -12 (round 10)
+  FAIL line 450: slab leak after drop running r10 (0 free)
+[00:01:03.273,000] <err> i2s_stm32_sai: START trigger failed -12
+  FAIL line 446: start -12 (round 11)
+  FAIL line 450: slab leak after drop running r11 (0 free)
+[00:01:05.390,000] <err> i2s_stm32_sai: START trigger failed -12
+  FAIL line 446: start -12 (round 12)
+  FAIL line 450: slab leak after drop running r12 (0 free)
+[00:01:07.507,000] <err> i2s_stm32_sai: START trigger failed -12
+  FAIL line 446: start -12 (round 13)
+  FAIL line 450: slab leak after drop running r13 (0 free)
+[00:01:09.624,000] <err> i2s_stm32_sai: START trigger failed -12
+  FAIL line 446: start -12 (round 14)
+  FAIL line 450: slab leak after drop running r14 (0 free)
+[00:01:11.741,000] <err> i2s_stm32_sai: START trigger failed -12
+  FAIL line 446: start -12 (round 15)
+  FAIL line 450: slab leak after drop running r15 (0 free)
+[00:01:13.858,000] <err> i2s_stm32_sai: START trigger failed -12
+  FAIL line 446: start -12 (round 16)
+  FAIL line 450: slab leak after drop running r16 (0 free)
+[00:01:15.975,000] <err> i2s_stm32_sai: START trigger failed -12
+  FAIL line 446: start -12 (round 17)
+  FAIL line 450: slab leak after drop running r17 (0 free)
+[00:01:18.093,000] <err> i2s_stm32_sai: START trigger failed -12
+  FAIL line 446: start -12 (round 18)
+  FAIL line 450: slab leak after drop running r18 (0 free)
+[00:01:20.210,000] <err> i2s_stm32_sai: START trigger failed -12
+  FAIL line 446: start -12 (round 19)
+  FAIL line 450: slab leak after drop running r19 (0 free)
+  FAIL line 457: write after drop rounds -11
+  FAIL line 457: write after drop rounds -11
+  FAIL line 457: write after drop rounds -11
+  FAIL line 457: write after drop rounds -11
+[00:01:22.343,000] <err> i2s_stm32_sai: START trigger failed -12
+[00:01:22.350,000] <err> i2s_stm32_sai: DRAIN - Invalid state: 1
+  FAIL line 462: start/drain after drop rounds -1
+  FAIL line 463: TX stalled after drop rounds (0 free)
+RX ws=24 gated=1
+[00:01:22.471,000] <err> i2s_stm32_sai: RX invalid state: 4
+  FAIL line 488: stream read -5
+  stream 300 blocks: 3 ms
+  FAIL line 490: timing off
+[00:01:22.485,000] <err> i2s_stm32_sai: STOP - Invalid state: 4
+  FAIL line 257: stop -5
+[00:01:23.504,000] <err> i2s_stm32_sai: RX queue: 0
+  FAIL line 272: slab leak after stop (1 free)
+  FAIL line 500: slab leak after drop running r0 (0 free)
+[00:01:23.619,000] <err> i2s_stm32_sai: START trigger failed -12
+  FAIL line 496: start -12 (round 1)
+  FAIL line 500: slab leak after drop running r1 (0 free)
+[00:01:23.684,000] <err> i2s_stm32_sai: START trigger failed -12
+  FAIL line 496: start -12 (round 2)
+  FAIL line 500: slab leak after drop running r2 (0 free)
+[00:01:23.749,000] <err> i2s_stm32_sai: START trigger failed -12
+  FAIL line 496: start -12 (round 3)
+  FAIL line 500: slab leak after drop running r3 (0 free)
+[00:01:23.816,000] <err> i2s_stm32_sai: START trigger failed -12
+  FAIL line 496: start -12 (round 4)
+  FAIL line 500: slab leak after drop running r4 (0 free)
+[00:01:23.882,000] <err> i2s_stm32_sai: START trigger failed -12
+  FAIL line 496: start -12 (round 5)
+  FAIL line 500: slab leak after drop running r5 (0 free)
+[00:01:23.949,000] <err> i2s_stm32_sai: START trigger failed -12
+  FAIL line 496: start -12 (round 6)
+  FAIL line 500: slab leak after drop running r6 (0 free)
+[00:01:24.017,000] <err> i2s_stm32_sai: START trigger failed -12
+  FAIL line 496: start -12 (round 7)
+  FAIL line 500: slab leak after drop running r7 (0 free)
+[00:01:24.083,000] <err> i2s_stm32_sai: START trigger failed -12
+  FAIL line 496: start -12 (round 8)
+  FAIL line 500: slab leak after drop running r8 (0 free)
+[00:01:24.150,000] <err> i2s_stm32_sai: START trigger failed -12
+  FAIL line 496: start -12 (round 9)
+  FAIL line 500: slab leak after drop running r9 (0 free)
+[00:01:24.218,000] <err> i2s_stm32_sai: START trigger failed -12
+  FAIL line 496: start -12 (round 10)
+  FAIL line 500: slab leak after drop running r10 (0 free)
+[00:01:24.287,000] <err> i2s_stm32_sai: START trigger failed -12
+  FAIL line 496: start -12 (round 11)
+  FAIL line 500: slab leak after drop running r11 (0 free)
+[00:01:24.354,000] <err> i2s_stm32_sai: START trigger failed -12
+  FAIL line 496: start -12 (round 12)
+  FAIL line 500: slab leak after drop running r12 (0 free)
+[00:01:24.422,000] <err> i2s_stm32_sai: START trigger failed -12
+  FAIL line 496: start -12 (round 13)
+  FAIL line 500: slab leak after drop running r13 (0 free)
+[00:01:24.490,000] <err> i2s_stm32_sai: START trigger failed -12
+  FAIL line 496: start -12 (round 14)
+  FAIL line 500: slab leak after drop running r14 (0 free)
+[00:01:24.560,000] <err> i2s_stm32_sai: START trigger failed -12
+  FAIL line 496: start -12 (round 15)
+  FAIL line 500: slab leak after drop running r15 (0 free)
+[00:01:24.628,000] <err> i2s_stm32_sai: START trigger failed -12
+  FAIL line 496: start -12 (round 16)
+  FAIL line 500: slab leak after drop running r16 (0 free)
+[00:01:24.697,000] <err> i2s_stm32_sai: START trigger failed -12
+  FAIL line 496: start -12 (round 17)
+  FAIL line 500: slab leak after drop running r17 (0 free)
+[00:01:24.766,000] <err> i2s_stm32_sai: START trigger failed -12
+  FAIL line 496: start -12 (round 18)
+  FAIL line 500: slab leak after drop running r18 (0 free)
+[00:01:24.835,000] <err> i2s_stm32_sai: START trigger failed -12
+  FAIL line 496: start -12 (round 19)
+  FAIL line 500: slab leak after drop running r19 (0 free)
+[00:01:24.904,000] <err> i2s_stm32_sai: START trigger failed -12
+  FAIL line 506: start after drop rounds -12
+[00:01:25.915,000] <err> i2s_stm32_sai: RX queue: 0
+  FAIL line 508: read after drop rounds -11
+  FAIL line 510: drop after reads 0
+[00:01:25.977,000] <err> i2s_stm32_sai: START trigger failed -12
+  FAIL line 514: start -12
+[00:01:27.036,000] <err> i2s_stm32_sai: RX queue: 0
+  FAIL line 517: read in error state -11
+[00:01:27.045,000] <err> i2s_stm32_sai: PREPARE - invalid state: 1
+  FAIL line 519: prepare -5
+  FAIL line 520: slab leak after prepare (0 free)
+[00:01:27.110,000] <err> i2s_stm32_sai: START trigger failed -12
+  FAIL line 523: restart after prepare -12
+[00:01:28.120,000] <err> i2s_stm32_sai: RX queue: 0
+  FAIL line 525: read after prepare -11
+  FAIL line 527: final drop
+TX ws=32 gated=1
+  FAIL line 400: write -11
+[00:01:28.685,000] <err> i2s_stm32_sai: START trigger failed -12
+  FAIL line 402: start -12
+  FAIL line 407: stream write -11 at block 1
+[00:01:29.198,000] <err> i2s_stm32_sai: DRAIN - Invalid state: 1
+  FAIL line 412: drain -5
+  FAIL line 413: slab not returned after drain (0 free)
+  stream 300 blocks: 1018 ms
+  FAIL line 417: timing off
+[00:01:30.217,000] <err> i2s_stm32_sai: START trigger failed -12
+  FAIL line 422: restart after drain -11
+  FAIL line 423: slab not returned after underrun
+  FAIL line 428: prefill -11
+  FAIL line 428: prefill -11
+  FAIL line 428: prefill -11
+  FAIL line 428: prefill -11
+[00:01:32.342,000] <err> i2s_stm32_sai: START trigger failed -12
+  FAIL line 431: start -12
+[00:01:32.351,000] <err> i2s_stm32_sai: STOP - Invalid state: 1
+  FAIL line 433: stop -5
+  FAIL line 437: slab leak after stop+drop (0 free)
+[00:01:34.485,000] <err> i2s_stm32_sai: START trigger failed -12
+  FAIL line 446: start -12 (round 0)
+  FAIL line 450: slab leak after drop running r0 (0 free)
+[00:01:36.600,000] <err> i2s_stm32_sai: START trigger failed -12
+  FAIL line 446: start -12 (round 1)
+  FAIL line 450: slab leak after drop running r1 (0 free)
+[00:01:38.716,000] <err> i2s_stm32_sai: START trigger failed -12
+  FAIL line 446: start -12 (round 2)
+  FAIL line 450: slab leak after drop running r2 (0 free)
+[00:01:40.832,000] <err> i2s_stm32_sai: START trigger failed -12
+  FAIL line 446: start -12 (round 3)
+  FAIL line 450: slab leak after drop running r3 (0 free)
+[00:01:42.948,000] <err> i2s_stm32_sai: START trigger failed -12
+  FAIL line 446: start -12 (round 4)
+  FAIL line 450: slab leak after drop running r4 (0 free)
+[00:01:45.064,000] <err> i2s_stm32_sai: START trigger failed -12
+  FAIL line 446: start -12 (round 5)
+  FAIL line 450: slab leak after drop running r5 (0 free)
+[00:01:47.180,000] <err> i2s_stm32_sai: START trigger failed -12
+  FAIL line 446: start -12 (round 6)
+  FAIL line 450: slab leak after drop running r6 (0 free)
+[00:01:49.297,000] <err> i2s_stm32_sai: START trigger failed -12
+  FAIL line 446: start -12 (round 7)
+  FAIL line 450: slab leak after drop running r7 (0 free)
+[00:01:51.413,000] <err> i2s_stm32_sai: START trigger failed -12
+  FAIL line 446: start -12 (round 8)
+  FAIL line 450: slab leak after drop running r8 (0 free)
+[00:01:53.530,000] <err> i2s_stm32_sai: START trigger failed -12
+  FAIL line 446: start -12 (round 9)
+  FAIL line 450: slab leak after drop running r9 (0 free)
+[00:01:55.646,000] <err> i2s_stm32_sai: START trigger failed -12
+  FAIL line 446: start -12 (round 10)
+  FAIL line 450: slab leak after drop running r10 (0 free)
+[00:01:57.763,000] <err> i2s_stm32_sai: START trigger failed -12
+  FAIL line 446: start -12 (round 11)
+  FAIL line 450: slab leak after drop running r11 (0 free)
+[00:01:59.880,000] <err> i2s_stm32_sai: START trigger failed -12
+  FAIL line 446: start -12 (round 12)
+  FAIL line 450: slab leak after drop running r12 (0 free)
+[00:02:01.997,000] <err> i2s_stm32_sai: START trigger failed -12
+  FAIL line 446: start -12 (round 13)
+  FAIL line 450: slab leak after drop running r13 (0 free)
+[00:02:04.114,000] <err> i2s_stm32_sai: START trigger failed -12
+  FAIL line 446: start -12 (round 14)
+  FAIL line 450: slab leak after drop running r14 (0 free)
+[00:02:06.231,000] <err> i2s_stm32_sai: START trigger failed -12
+  FAIL line 446: start -12 (round 15)
+  FAIL line 450: slab leak after drop running r15 (0 free)
+[00:02:08.348,000] <err> i2s_stm32_sai: START trigger failed -12
+  FAIL line 446: start -12 (round 16)
+  FAIL line 450: slab leak after drop running r16 (0 free)
+[00:02:10.466,000] <err> i2s_stm32_sai: START trigger failed -12
+  FAIL line 446: start -12 (round 17)
+  FAIL line 450: slab leak after drop running r17 (0 free)
+[00:02:12.583,000] <err> i2s_stm32_sai: START trigger failed -12
+  FAIL line 446: start -12 (round 18)
+  FAIL line 450: slab leak after drop running r18 (0 free)
+[00:02:14.701,000] <err> i2s_stm32_sai: START trigger failed -12
+  FAIL line 446: start -12 (round 19)
+  FAIL line 450: slab leak after drop running r19 (0 free)
+  FAIL line 457: write after drop rounds -11
+  FAIL line 457: write after drop rounds -11
+  FAIL line 457: write after drop rounds -11
+  FAIL line 457: write after drop rounds -11
+[00:02:16.834,000] <err> i2s_stm32_sai: START trigger failed -12
+[00:02:16.841,000] <err> i2s_stm32_sai: DRAIN - Invalid state: 1
+  FAIL line 462: start/drain after drop rounds -1
+  FAIL line 463: TX stalled after drop rounds (0 free)
+RX ws=32 gated=1
+[00:02:16.958,000] <err> i2s_stm32_sai: START trigger failed -12
+  FAIL line 484: start -12
+[00:02:17.968,000] <err> i2s_stm32_sai: RX queue: 0
+  FAIL line 486: first read -11
+[00:02:18.976,000] <err> i2s_stm32_sai: RX queue: 0
+  FAIL line 488: stream read -11
+  stream 300 blocks: 0 ms
+  FAIL line 490: timing off
+[00:02:18.989,000] <err> i2s_stm32_sai: STOP - Invalid state: 1
+  FAIL line 257: stop -5
+[00:02:20.008,000] <err> i2s_stm32_sai: RX queue: 0
+  FAIL line 272: slab leak after stop (0 free)
+[00:02:20.068,000] <err> i2s_stm32_sai: START trigger failed -12
+  FAIL line 496: start -12 (round 0)
+  FAIL line 500: slab leak after drop running r0 (0 free)
+[00:02:20.134,000] <err> i2s_stm32_sai: START trigger failed -12
+  FAIL line 496: start -12 (round 1)
+  FAIL line 500: slab leak after drop running r1 (0 free)
+[00:02:20.200,000] <err> i2s_stm32_sai: START trigger failed -12
+  FAIL line 496: start -12 (round 2)
+  FAIL line 500: slab leak after drop running r2 (0 free)
+[00:02:20.265,000] <err> i2s_stm32_sai: START trigger failed -12
+  FAIL line 496: start -12 (round 3)
+  FAIL line 500: slab leak after drop running r3 (0 free)
+[00:02:20.331,000] <err> i2s_stm32_sai: START trigger failed -12
+  FAIL line 496: start -12 (round 4)
+  FAIL line 500: slab leak after drop running r4 (0 free)
+[00:02:20.398,000] <err> i2s_stm32_sai: START trigger failed -12
+  FAIL line 496: start -12 (round 5)
+  FAIL line 500: slab leak after drop running r5 (0 free)
+[00:02:20.465,000] <err> i2s_stm32_sai: START trigger failed -12
+  FAIL line 496: start -12 (round 6)
+  FAIL line 500: slab leak after drop running r6 (0 free)
+[00:02:20.533,000] <err> i2s_stm32_sai: START trigger failed -12
+  FAIL line 496: start -12 (round 7)
+  FAIL line 500: slab leak after drop running r7 (0 free)
+[00:02:20.599,000] <err> i2s_stm32_sai: START trigger failed -12
+  FAIL line 496: start -12 (round 8)
+  FAIL line 500: slab leak after drop running r8 (0 free)
+[00:02:20.666,000] <err> i2s_stm32_sai: START trigger failed -12
+  FAIL line 496: start -12 (round 9)
+  FAIL line 500: slab leak after drop running r9 (0 free)
+[00:02:20.733,000] <err> i2s_stm32_sai: START trigger failed -12
+  FAIL line 496: start -12 (round 10)
+  FAIL line 500: slab leak after drop running r10 (0 free)
+[00:02:20.801,000] <err> i2s_stm32_sai: START trigger failed -12
+  FAIL line 496: start -12 (round 11)
+  FAIL line 500: slab leak after drop running r11 (0 free)
+[00:02:20.868,000] <err> i2s_stm32_sai: START trigger failed -12
+  FAIL line 496: start -12 (round 12)
+  FAIL line 500: slab leak after drop running r12 (0 free)
+[00:02:20.936,000] <err> i2s_stm32_sai: START trigger failed -12
+  FAIL line 496: start -12 (round 13)
+  FAIL line 500: slab leak after drop running r13 (0 free)
+[00:02:21.005,000] <err> i2s_stm32_sai: START trigger failed -12
+  FAIL line 496: start -12 (round 14)
+  FAIL line 500: slab leak after drop running r14 (0 free)
+[00:02:21.074,000] <err> i2s_stm32_sai: START trigger failed -12
+  FAIL line 496: start -12 (round 15)
+  FAIL line 500: slab leak after drop running r15 (0 free)
+[00:02:21.142,000] <err> i2s_stm32_sai: START trigger failed -12
+  FAIL line 496: start -12 (round 16)
+  FAIL line 500: slab leak after drop running r16 (0 free)
+[00:02:21.211,000] <err> i2s_stm32_sai: START trigger failed -12
+  FAIL line 496: start -12 (round 17)
+  FAIL line 500: slab leak after drop running r17 (0 free)
+[00:02:21.280,000] <err> i2s_stm32_sai: START trigger failed -12
+  FAIL line 496: start -12 (round 18)
+  FAIL line 500: slab leak after drop running r18 (0 free)
+[00:02:21.349,000] <err> i2s_stm32_sai: START trigger failed -12
+  FAIL line 496: start -12 (round 19)
+  FAIL line 500: slab leak after drop running r19 (0 free)
+[00:02:21.418,000] <err> i2s_stm32_sai: START trigger failed -12
+  FAIL line 506: start after drop rounds -12
+[00:02:22.429,000] <err> i2s_stm32_sai: RX queue: 0
+  FAIL line 508: read after drop rounds -11
+  FAIL line 510: drop after reads 0
+[00:02:22.491,000] <err> i2s_stm32_sai: START trigger failed -12
+  FAIL line 514: start -12
+[00:02:23.550,000] <err> i2s_stm32_sai: RX queue: 0
+  FAIL line 517: read in error state -11
+[00:02:23.559,000] <err> i2s_stm32_sai: PREPARE - invalid state: 1
+  FAIL line 519: prepare -5
+  FAIL line 520: slab leak after prepare (0 free)
+[00:02:23.624,000] <err> i2s_stm32_sai: START trigger failed -12
+  FAIL line 523: restart after prepare -12
+[00:02:24.635,000] <err> i2s_stm32_sai: RX queue: 0
+  FAIL line 525: read after prepare -11
+  FAIL line 527: final drop
+PINS ws=16 gated=1
+  FS idle after configure: 0 Hz
+  FAIL line 341: prefill
+  FAIL line 341: prefill
+  FAIL line 341: prefill
+  FAIL line 341: prefill
+[00:02:26.715,000] <err> i2s_stm32_sai: START trigger failed -12
+  FAIL line 344: start -12
+  FS streaming: 0 Hz
+  FAIL line 347: FS frequency 0 Hz
+  MCLK streaming: 0 edges, 0 high / 32258 low samples
+  FAIL line 353: MCLK not toggling while streaming (0 edges)
+  FAIL line 360: drop 0
+  FS after drop: 0 Hz
+  MCLK after drop: 0 edges
+  FAIL line 375: MCLK stopped although MCKEN keeps it running (0 edges)
+PINS ws=32 gated=1
+  FS idle after configure: 0 Hz
+  FAIL line 341: prefill
+  FAIL line 341: prefill

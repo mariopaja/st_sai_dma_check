@@ -1,0 +1,11 @@
+/*
+ * Copyright (c) 2026 Mario Paja
+ *
+ * SPDX-License-Identifier: Apache-2.0
+ */
+
+/* With n6_sai2b_tx.overlay: SAI2_A as synchronous RX slave of SAI2_B (PE11 -> PF5) */
+&sai2_a {
+	pinctrl-0 = <&sai2_sd_a_pf5>;
+	synchronous;
+};

@@ -1,0 +1,272 @@
+*** Booting Zephyr OS build v4.5.0-rc2-403-gb70dbaf045e0 ***
+SAI DMA hw test
+TX ws=16 gated=1
+  stream 300 blocks: 434 ms (expected ~435 ms)
+  [tx r0] before drop free=4
+  [tx r0] after drop free=7
+  FAIL line 148: slab leak after drop running (7 free)
+  [tx r1] before drop free=3
+  [tx r1] after drop free=6
+  FAIL line 148: slab leak after drop running (6 free)
+  [tx r2] before drop free=2
+  [tx r2] after drop free=5
+  FAIL line 148: slab leak after drop running (5 free)
+  [tx r3] before drop free=1
+  [tx r3] after drop free=4
+  FAIL line 148: slab leak after drop running (4 free)
+  [tx r4] before drop free=0
+  [tx r4] after drop free=3
+  FAIL line 148: slab leak after drop running (3 free)
+  [tx r5] before drop free=0
+  [tx r5] after drop free=2
+  FAIL line 148: slab leak after drop running (2 free)
+  [tx r6] before drop free=0
+  [tx r6] after drop free=2
+  FAIL line 148: slab leak after drop running (2 free)
+  [tx r7] before drop free=0
+  [tx r7] after drop free=2
+  FAIL line 148: slab leak after drop running (2 free)
+  [tx r8] before drop free=0
+  [tx r8] after drop free=2
+  FAIL line 148: slab leak after drop running (2 free)
+  [tx r9] before drop free=0
+  [tx r9] after drop free=2
+  FAIL line 148: slab leak after drop running (2 free)
+  [tx r10] before drop free=0
+  [tx r10] after drop free=2
+  FAIL line 148: slab leak after drop running (2 free)
+  [tx r11] before drop free=0
+  [tx r11] after drop free=2
+  FAIL line 148: slab leak after drop running (2 free)
+  [tx r12] before drop free=1
+  [tx r12] after drop free=2
+  FAIL line 148: slab leak after drop running (2 free)
+  [tx r13] before drop free=1
+  [tx r13] after drop free=2
+  FAIL line 148: slab leak after drop running (2 free)
+  [tx r14] before drop free=1
+  [tx r14] after drop free=2
+  FAIL line 148: slab leak after drop running (2 free)
+  [tx r15] before drop free=1
+  [tx r15] after drop free=2
+  FAIL line 148: slab leak after drop running (2 free)
+  [tx r16] before drop free=1
+  [tx r16] after drop free=2
+  FAIL line 148: slab leak after drop running (2 free)
+  [tx r17] before drop free=1
+  [tx r17] after drop free=2
+  FAIL line 148: slab leak after drop running (2 free)
+  [tx r18] before drop free=1
+  [tx r18] after drop free=2
+  FAIL line 148: slab leak after drop running (2 free)
+  [tx r19] before drop free=1
+  [tx r19] after drop free=2
+  FAIL line 148: slab leak after drop running (2 free)
+TX ws=32 gated=1
+  FAIL line 109: slab not returned after drain (2 free)
+  stream 300 blocks: 936 ms (expected ~435 ms)
+  FAIL line 113: timing off
+  FAIL line 119: slab not returned after underrun
+  FAIL line 124: prefill -11
+  FAIL line 124: prefill -11
+  FAIL line 133: slab leak after stop+drop (2 free)
+  [tx r0] before drop free=0
+  [tx r0] after drop free=1
+  FAIL line 148: slab leak after drop running (1 free)
+  [tx r1] before drop free=0
+  [tx r1] after drop free=1
+  FAIL line 148: slab leak after drop running (1 free)
+  [tx r2] before drop free=0
+  [tx r2] after drop free=1
+  FAIL line 148: slab leak after drop running (1 free)
+  [tx r3] before drop free=0
+  [tx r3] after drop free=1
+  FAIL line 148: slab leak after drop running (1 free)
+  [tx r4] before drop free=0
+  [tx r4] after drop free=1
+  FAIL line 148: slab leak after drop running (1 free)
+  [tx r5] before drop free=0
+  [tx r5] after drop free=1
+  FAIL line 148: slab leak after drop running (1 free)
+  [tx r6] before drop free=0
+  [tx r6] after drop free=1
+  FAIL line 148: slab leak after drop running (1 free)
+  [tx r7] before drop free=0
+  [tx r7] after drop free=1
+  FAIL line 148: slab leak after drop running (1 free)
+  [tx r8] before drop free=0
+  [tx r8] after drop free=1
+  FAIL line 148: slab leak after drop running (1 free)
+  [tx r9] before drop free=0
+  [tx r9] after drop free=1
+  FAIL line 148: slab leak after drop running (1 free)
+  [tx r10] before drop free=0
+  [tx r10] after drop free=1
+  FAIL line 148: slab leak after drop running (1 free)
+  [tx r11] before drop free=0
+  [tx r11] after drop free=1
+  FAIL line 148: slab leak after drop running (1 free)
+  [tx r12] before drop free=1
+  [tx r12] after drop free=1
+  FAIL line 148: slab leak after drop running (1 free)
+  [tx r13] before drop free=1
+  [tx r13] after drop free=1
+  FAIL line 148: slab leak after drop running (1 free)
+  [tx r14] before drop free=1
+  [tx r14] after drop free=1
+  FAIL line 148: slab leak after drop running (1 free)
+  [tx r15] before drop free=1
+  [tx r15] after drop free=1
+  FAIL line 148: slab leak after drop running (1 free)
+  [tx r16] before drop free=1
+  [tx r16] after drop free=1
+  FAIL line 148: slab leak after drop running (1 free)
+  [tx r17] before drop free=1
+  [tx r17] after drop free=1
+  FAIL line 148: slab leak after drop running (1 free)
+  [tx r18] before drop free=1
+  [tx r18] after drop free=1
+  FAIL line 148: slab leak after drop running (1 free)
+  [tx r19] before drop free=1
+  [tx r19] after drop free=1
+  FAIL line 148: slab leak after drop running (1 free)
+RX ws=16 gated=1
+  stream 300 blocks: 434 ms (expected ~435 ms)
+  [rx r0] before drop free=7
+  [rx r0] after drop free=7
+  FAIL line 211: slab leak after drop running (7 free)
+  [rx r1] before drop free=6
+  [rx r1] after drop free=6
+  FAIL line 211: slab leak after drop running (6 free)
+  [rx r2] before drop free=5
+  [rx r2] after drop free=5
+  FAIL line 211: slab leak after drop running (5 free)
+  [rx r3] before drop free=4
+  [rx r3] after drop free=4
+  FAIL line 211: slab leak after drop running (4 free)
+  [rx r4] before drop free=3
+  [rx r4] after drop free=3
+  FAIL line 211: slab leak after drop running (3 free)
+  [rx r5] before drop free=2
+  [rx r5] after drop free=2
+  FAIL line 211: slab leak after drop running (2 free)
+  [rx r6] before drop free=0
+  [rx r6] after drop free=2
+  FAIL line 211: slab leak after drop running (2 free)
+  [rx r7] before drop free=0
+  [rx r7] after drop free=2
+  FAIL line 211: slab leak after drop running (2 free)
+  [rx r8] before drop free=0
+  [rx r8] after drop free=2
+  FAIL line 211: slab leak after drop running (2 free)
+  [rx r9] before drop free=0
+  [rx r9] after drop free=2
+  FAIL line 211: slab leak after drop running (2 free)
+  [rx r10] before drop free=0
+  [rx r10] after drop free=2
+  FAIL line 211: slab leak after drop running (2 free)
+  [rx r11] before drop free=0
+  [rx r11] after drop free=2
+  FAIL line 211: slab leak after drop running (2 free)
+  [rx r12] before drop free=0
+  [rx r12] after drop free=2
+  FAIL line 211: slab leak after drop running (2 free)
+  [rx r13] before drop free=0
+  [rx r13] after drop free=2
+  FAIL line 211: slab leak after drop running (2 free)
+  [rx r14] before drop free=0
+  [rx r14] after drop free=2
+  FAIL line 211: slab leak after drop running (2 free)
+  [rx r15] before drop free=0
+  [rx r15] after drop free=2
+  FAIL line 211: slab leak after drop running (2 free)
+  [rx r16] before drop free=0
+  [rx r16] after drop free=2
+  FAIL line 211: slab leak after drop running (2 free)
+  [rx r17] before drop free=0
+  [rx r17] after drop free=2
+  FAIL line 211: slab leak after drop running (2 free)
+  [rx r18] before drop free=0
+  [rx r18] after drop free=2
+  FAIL line 211: slab leak after drop running (2 free)
+  [rx r19] before drop free=0
+  [rx r19] after drop free=2
+  FAIL line 211: slab leak after drop running (2 free)
+[00:00:52.840,000] <err> i2s_stm32_sai: RX invalid state: 4
+  FAIL line 223: slab leak after prepare (2 free)
+  FAIL line 233: final drop
+RX ws=32 gated=1
+[00:00:52.957,000] <err> i2s_stm32_sai: RX invalid state: 4
+  FAIL line 178: stream read -5 at 0
+  stream 300 blocks: 9 ms (expected ~435 ms)
+  FAIL line 185: timing off
+[00:00:52.973,000] <err> i2s_stm32_sai: STOP - Invalid state: 4
+  FAIL line 188: stop -5
+[00:00:52.992,000] <err> i2s_stm32_sai: RX invalid state: 4
+  FAIL line 199: slab leak after stop (1 free, 0 drained)
+[00:00:53.053,000] <err> i2s_stm32_sai: START trigger: invalid state 4
+  FAIL line 205: start -5 (round 0)
+  [rx r0] before drop free=1
+  [rx r0] after drop free=1
+  FAIL line 211: slab leak after drop running (1 free)
+  [rx r1] before drop free=0
+  [rx r1] after drop free=1
+  FAIL line 211: slab leak after drop running (1 free)
+  [rx r2] before drop free=0
+  [rx r2] after drop free=1
+  FAIL line 211: slab leak after drop running (1 free)
+  [rx r3] before drop free=0
+  [rx r3] after drop free=1
+  FAIL line 211: slab leak after drop running (1 free)
+  [rx r4] before drop free=0
+  [rx r4] after drop free=1
+  FAIL line 211: slab leak after drop running (1 free)
+  [rx r5] before drop free=0
+  [rx r5] after drop free=1
+  FAIL line 211: slab leak after drop running (1 free)
+  [rx r6] before drop free=0
+  [rx r6] after drop free=1
+  FAIL line 211: slab leak after drop running (1 free)
+  [rx r7] before drop free=0
+  [rx r7] after drop free=1
+  FAIL line 211: slab leak after drop running (1 free)
+  [rx r8] before drop free=0
+  [rx r8] after drop free=1
+  FAIL line 211: slab leak after drop running (1 free)
+  [rx r9] before drop free=0
+  [rx r9] after drop free=1
+  FAIL line 211: slab leak after drop running (1 free)
+  [rx r10] before drop free=0
+  [rx r10] after drop free=1
+  FAIL line 211: slab leak after drop running (1 free)
+  [rx r11] before drop free=0
+  [rx r11] after drop free=1
+  FAIL line 211: slab leak after drop running (1 free)
+  [rx r12] before drop free=0
+  [rx r12] after drop free=1
+  FAIL line 211: slab leak after drop running (1 free)
+  [rx r13] before drop free=0
+  [rx r13] after drop free=1
+  FAIL line 211: slab leak after drop running (1 free)
+  [rx r14] before drop free=0
+  [rx r14] after drop free=1
+  FAIL line 211: slab leak after drop running (1 free)
+  [rx r15] before drop free=0
+  [rx r15] after drop free=1
+  FAIL line 211: slab leak after drop running (1 free)
+  [rx r16] before drop free=0
+  [rx r16] after drop free=1
+  FAIL line 211: slab leak after drop running (1 free)
+  [rx r17] before drop free=0
+  [rx r17] after drop free=1
+  FAIL line 211: slab leak after drop running (1 free)
+  [rx r18] before drop free=0
+  [rx r18] after drop free=1
+  FAIL line 211: slab leak after drop running (1 free)
+  [rx r19] before drop free=0
+  [rx r19] after drop free=1
+  FAIL line 211: slab leak after drop running (1 free)
+[00:00:54.355,000] <err> i2s_stm32_sai: RX invalid state: 4
+  FAIL line 223: slab leak after prepare (1 free)
+  FAIL line 233: final drop
+RESULT: FAIL (205 passed, 95 failed)

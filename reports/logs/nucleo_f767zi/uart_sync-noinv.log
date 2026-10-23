@@ -1,0 +1,81 @@
+*** Booting Zephyr OS build v4.5.0-rc2-404-g209d616fbc7f ***
+SAI DMA hw test (sync loopback)
+LOOPBACK ws=16
+[00:00:00.009,000] <wrn> i2s_stm32_sai: Synchronous RX peripheral mode requires an active controller with bit clock gating disabled
+  round 0: 12800 samples checked, 0 skipped before lock, 1045 errors, 299 L/R swapped
+    block 1 sample 0: counter 46170, expected 1912 (+44258)
+    block 1 sample 1: counter 46680, expected 46171 (+509)
+    block 1 sample 2: counter 57863, expected 46681 (+11182)
+    block 1 sample 3: counter 13209, expected 57864 (-44655)
+  FAIL line 639: round 0: locked=1 errors=1045 swapped=299 skipped=0
+  round 1: 12798 samples checked, 2 skipped before lock, 1047 errors, 299 L/R swapped
+    block 1 sample 0: counter 46170, expected 1912 (+44258)
+    block 1 sample 1: counter 46680, expected 46171 (+509)
+    block 1 sample 2: counter 57863, expected 46681 (+11182)
+    block 1 sample 3: counter 13209, expected 57864 (-44655)
+  FAIL line 639: round 1: locked=1 errors=1047 swapped=299 skipped=2
+  round 2: 12798 samples checked, 2 skipped before lock, 1147 errors, 299 L/R swapped
+    block 1 sample 0: counter 46170, expected 1912 (+44258)
+    block 1 sample 1: counter 46680, expected 46171 (+509)
+    block 1 sample 2: counter 57863, expected 46681 (+11182)
+    block 1 sample 3: counter 13209, expected 57864 (-44655)
+  FAIL line 639: round 2: locked=1 errors=1147 swapped=299 skipped=2
+  after drop: 12784 samples checked, 16 skipped before lock, 2058 errors, 495 L/R swapped
+    block 1 sample 0: counter 34906, expected 52704 (-17798)
+    block 1 sample 1: counter 46680, expected 34907 (+11773)
+    block 1 sample 2: counter 57863, expected 46681 (+11182)
+    block 1 sample 3: counter 13209, expected 57864 (-44655)
+  FAIL line 639: after drop: locked=1 errors=2058 swapped=495 skipped=16
+LOOPBACK ws=24
+[00:00:00.815,000] <wrn> i2s_stm32_sai: Synchronous RX peripheral mode requires an active controller with bit clock gating disabled
+  round 0: 12799 samples checked, 1 skipped before lock, 3955 errors, 1608 L/R swapped
+    block 0 sample 8: counter 15257712, expected 57998 (+15199714)
+    block 0 sample 9: counter 15388786, expected 15257713 (+131073)
+    block 0 sample 10: counter 15519860, expected 15388787 (+131073)
+    block 0 sample 11: counter 15650934, expected 15519861 (+131073)
+  FAIL line 639: round 0: locked=1 errors=3955 swapped=1608 skipped=1
+  round 1: 12799 samples checked, 1 skipped before lock, 4260 errors, 1600 L/R swapped
+    block 0 sample 8: counter 3328, expected 57998 (-54670)
+    block 0 sample 16: counter 18848, expected 3336 (+15512)
+    block 0 sample 24: counter 1808, expected 18856 (-17048)
+    block 0 sample 32: counter 18864, expected 1816 (+17048)
+  FAIL line 639: round 1: locked=1 errors=4260 swapped=1600 skipped=1
+  round 2: 12799 samples checked, 1 skipped before lock, 4257 errors, 1600 L/R swapped
+    block 0 sample 8: counter 3328, expected 57998 (-54670)
+    block 0 sample 16: counter 35662, expected 3336 (+32326)
+    block 0 sample 24: counter 1808, expected 35670 (-33862)
+    block 0 sample 32: counter 18864, expected 1816 (+17048)
+  FAIL line 639: round 2: locked=1 errors=4257 swapped=1600 skipped=1
+  after drop: 12744 samples checked, 56 skipped before lock, 5436 errors, 2372 L/R swapped
+    block 1 sample 0: counter 12694618, expected 53040 (+12641578)
+    block 1 sample 1: counter 57863, expected 12694619 (-12636756)
+    block 1 sample 8: counter 1050504, expected 57870 (+992634)
+    block 1 sample 9: counter 1181578, expected 1050505 (+131073)
+  FAIL line 639: after drop: locked=1 errors=5436 swapped=2372 skipped=56
+LOOPBACK ws=32
+[00:00:01.627,000] <wrn> i2s_stm32_sai: Synchronous RX peripheral mode requires an active controller with bit clock gating disabled
+  round 0: 12744 samples checked, 56 skipped before lock, 5489 errors, 2372 L/R swapped
+    block 0 sample 64: counter 1848, expected 2768293872 (+1526675272)
+    block 0 sample 72: counter 2768293624, expected 1856 (-1526675528)
+    block 0 sample 88: counter 1872, expected 2768293640 (+1526675528)
+    block 0 sample 96: counter 2768293648, expected 1880 (-1526675528)
+  FAIL line 639: round 0: locked=1 errors=5489 swapped=2372 skipped=56
+  round 1: 12776 samples checked, 24 skipped before lock, 5174 errors, 2188 L/R swapped
+    block 0 sample 32: counter 882902840, expected 18960 (+882883880)
+    block 0 sample 33: counter 883033914, expected 882902841 (+131073)
+    block 0 sample 34: counter 883164988, expected 883033915 (+131073)
+    block 0 sample 35: counter 883296062, expected 883164989 (+131073)
+  FAIL line 639: round 1: locked=1 errors=5174 swapped=2188 skipped=24
+  round 2: 12776 samples checked, 24 skipped before lock, 5175 errors, 2188 L/R swapped
+    block 0 sample 32: counter 882902840, expected 20496 (+882882344)
+    block 0 sample 33: counter 883033914, expected 882902841 (+131073)
+    block 0 sample 34: counter 883164988, expected 883033915 (+131073)
+    block 0 sample 35: counter 883296062, expected 883164989 (+131073)
+  FAIL line 639: round 2: locked=1 errors=5175 swapped=2188 skipped=24
+  after drop: 12799 samples checked, 1 skipped before lock, 4378 errors, 1600 L/R swapped
+    block 0 sample 8: counter 53656, expected 57998 (-4342)
+    block 0 sample 40: counter 4264086960, expected 53688 (-30934024)
+    block 0 sample 41: counter 4264218034, expected 4264086961 (+131073)
+    block 0 sample 42: counter 4264349108, expected 4264218035 (+131073)
+  FAIL line 639: after drop: locked=1 errors=4378 swapped=1600 skipped=1
+RESULT: FAIL (52 passed, 12 failed)
