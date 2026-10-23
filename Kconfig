@@ -1,0 +1,12 @@
+# Copyright (c) 2026 Mario Paja
+# SPDX-License-Identifier: Apache-2.0
+
+config SAI_CHECK_ISR_TIMING
+	bool "Measure the SAI DMA interrupt time instead of running the checks"
+	depends on TRACING_USER
+	help
+	  Time every DMA interrupt of the SAI TX and RX channels with the DWT cycle
+	  counter (user tracing hooks) while both directions stream, and print the
+	  statistics. Enable with variants/isr_timing.conf.
+
+source "Kconfig.zephyr"

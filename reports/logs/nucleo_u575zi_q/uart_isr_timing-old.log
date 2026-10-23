@@ -1,0 +1,10 @@
+*** Bootg Zephyr OS build v4.5.0-rc2-403-gb70dbaf045e0 ***
+SAI DMA hw test (async), slabs 0x20001c20/0x20000c20
+core clock 160000000 Hz, TX DMA irq 30, RX DMA irq 29
+ISR TIMING ws=16, 2000 blocks per direction, 2903 ms
+  TX irq 30: 4000 ISRs (2.00 per block), ns min 2000 avg 7331 p99 12750 max 12681, load 1.010 %
+  RX irq 29: 4000 ISRs (2.00 per block), ns min 1443 avg 7618 p99 14000 max 14093, load 1.049 %
+ISR TIMING ws=32, 2000 blocks per direction, 1512 ms
+  TX irq 30: 4000 ISRs (2.00 per block), ns min 2000 avg 6987 p99 12750 max 12693, load 0.481 %
+  RX irq 29: 4000 ISRs (2.00 per block), ns min 1443 avg 7618 p99 14000 max 14081, load 0.524 %
+RESULT: PASS (16 passed, 0 failed)

@@ -14,11 +14,13 @@
  * received unchanged, in order and on the right slot.
  */
 
+#include <string.h>
 #include <zephyr/kernel.h>
 #include <zephyr/drivers/i2s.h>
 #include <zephyr/sys/printk.h>
 #include <soc.h>
 #include <zephyr/linker/devicetree_regions.h>
+#include <cmsis_core.h>
 
 #define FRAMES     64
 #define NUM_BLOCKS 8
@@ -562,7 +564,7 @@ static void test_concurrent(uint8_t ws, bool gated)
 	CHECK(timing_ok(dt_tx, N_XFER), "tx timing off");
 }
 
-static void run(void)
+static __maybe_unused void run(void)
 {
 	static const uint8_t sizes[] = {16, 24, 32};
 
@@ -701,7 +703,7 @@ static void test_loopback(uint8_t ws)
 	      k_mem_slab_num_free_get(&tx_slab));
 }
 
-static void run(void)
+static __maybe_unused void run(void)
 {
 	test_loopback(16);
 	test_loopback(24);
@@ -709,6 +711,153 @@ static void run(void)
 }
 
 #endif /* SYNC_RX */
+
+#ifdef CONFIG_SAI_CHECK_ISR_TIMING
+
+/* ---------- DMA interrupt timing (user tracing hooks + DWT cycle counter) ---------- */
+
+#if !DT_NODE_HAS_COMPAT(DT_DMAS_CTLR(DT_ALIAS(i2s_tx)), st_stm32u5_dma)
+#error "ISR timing maps DMA channels to IRQs for GPDMA (st,stm32u5-dma) only"
+#endif
+
+/* GPDMA: interrupt index = channel */
+#define SAI_DMA_IRQ(node) DT_IRQ_BY_IDX(DT_DMAS_CTLR(node), DT_DMAS_CELL_BY_IDX(node, 0, channel), irq)
+
+#define HIST_NS    250U /* histogram bucket width */
+#define HIST_SLOTS 256U /* up to 64 us */
+
+struct isr_stats {
+	uint32_t irq;
+	uint32_t count;
+	uint64_t sum;
+	uint32_t min;
+	uint32_t max;
+	uint32_t hist[HIST_SLOTS];
+};
+
+static struct isr_stats stats[2] = {
+	{.irq = SAI_DMA_IRQ(DT_ALIAS(i2s_tx))},
+	{.irq = SAI_DMA_IRQ(DT_ALIAS(i2s_rx))},
+};
+static volatile bool timing_on;
+static uint32_t ns_per_kcycle;
+static uint32_t t_enter;
+static int cur = -1;
+
+void sys_trace_isr_enter_user(void)
+{
+	uint32_t irq = __get_IPSR() - 16U;
+
+	if (!timing_on) {
+		return;
+	}
+	for (int i = 0; i < 2; i++) {
+		if (stats[i].irq == irq) {
+			cur = i;
+			t_enter = DWT->CYCCNT;
+			return;
+		}
+	}
+}
+
+void sys_trace_isr_exit_user(void)
+{
+	uint32_t d;
+	struct isr_stats *st;
+
+	if (cur < 0) {
+		return;
+	}
+	d = DWT->CYCCNT - t_enter;
+	st = &stats[cur];
+	cur = -1;
+	st->count++;
+	st->sum += d;
+	st->min = MIN(st->min, d);
+	st->max = MAX(st->max, d);
+	st->hist[MIN((d * ns_per_kcycle / 1000U) / HIST_NS, HIST_SLOTS - 1U)]++;
+}
+
+static uint32_t to_ns(uint64_t cycles)
+{
+	return (uint32_t)(cycles * ns_per_kcycle / 1000U);
+}
+
+static uint32_t percentile_ns(const struct isr_stats *st, uint32_t permille)
+{
+	uint32_t target = (uint32_t)(((uint64_t)st->count * permille + 999U) / 1000U);
+	uint32_t acc = 0;
+
+	for (uint32_t i = 0; i < HIST_SLOTS; i++) {
+		acc += st->hist[i];
+		if (acc >= target) {
+			return (i + 1U) * HIST_NS;
+		}
+	}
+	return HIST_SLOTS * HIST_NS;
+}
+
+static void timing_run(uint8_t ws, int blocks)
+{
+	uint32_t c0, c1;
+	int64_t dt;
+	int ret;
+
+	memset(stats[0].hist, 0, sizeof(stats[0].hist));
+	memset(stats[1].hist, 0, sizeof(stats[1].hist));
+	for (int i = 0; i < 2; i++) {
+		stats[i].count = 0;
+		stats[i].sum = 0;
+		stats[i].min = UINT32_MAX;
+		stats[i].max = 0;
+	}
+
+	ret = cfg(tx_dev, I2S_DIR_TX, &tx_slab, ws, ctrl_opts(false));
+	ret |= cfg(rx_dev, I2S_DIR_RX, &rx_slab, ws, ctrl_opts(false));
+	CHECK(ret == 0, "configure %d", ret);
+
+	timing_on = true;
+	c0 = DWT->CYCCNT;
+	ret = i2s_trigger(rx_dev, I2S_DIR_RX, I2S_TRIGGER_START);
+	CHECK(ret == 0, "rx start %d", ret);
+	writer_start(ws, blocks);
+	ret = rx_stream(ws, blocks, &dt);
+	CHECK(ret == 0, "rx stream %d", ret);
+	k_thread_join(&writer_thread, K_FOREVER);
+	c1 = DWT->CYCCNT;
+	timing_on = false;
+	rx_stop_and_drain();
+	CHECK(writer_err == 0, "writer error %d", writer_err);
+	CHECK(wait_slab_full(&tx_slab, 500), "tx slab");
+
+	printk("ISR TIMING ws=%u, %d blocks per direction, %u ms\n", ws, blocks,
+	       to_ns(c1 - c0) / 1000000U);
+	for (int i = 0; i < 2; i++) {
+		const struct isr_stats *st = &stats[i];
+
+		printk("  %s irq %u: %u ISRs (%u.%02u per block), ns min %u avg %u p99 %u max %u, "
+		       "load %u.%03u %%\n",
+		       i == 0 ? "TX" : "RX", st->irq, st->count, st->count / blocks,
+		       (st->count % blocks) * 100U / blocks, to_ns(st->min),
+		       st->count ? to_ns(st->sum / st->count) : 0, percentile_ns(st, 990U),
+		       to_ns(st->max), (uint32_t)(st->sum * 100U / (c1 - c0)),
+		       (uint32_t)((st->sum * 100000U / (c1 - c0)) % 1000U));
+	}
+}
+
+static void timing_main(void)
+{
+	CoreDebug->DEMCR |= CoreDebug_DEMCR_TRCENA_Msk;
+	DWT->CYCCNT = 0;
+	DWT->CTRL |= DWT_CTRL_CYCCNTENA_Msk;
+	ns_per_kcycle = (uint32_t)(1000000000000ULL / sys_clock_hw_cycles_per_sec());
+	printk("core clock %u Hz, TX DMA irq %u, RX DMA irq %u\n", sys_clock_hw_cycles_per_sec(),
+	       stats[0].irq, stats[1].irq);
+
+	timing_run(16, 2000);
+	timing_run(32, 2000);
+}
+#endif /* CONFIG_SAI_CHECK_ISR_TIMING */
 
 int main(void)
 {
@@ -718,7 +867,11 @@ int main(void)
 	      k_mem_slab_init(&rx_slab, rx_slab_buf, MAX_BLOCK, NUM_BLOCKS) == 0, "slab init");
 	CHECK(device_is_ready(tx_dev) && device_is_ready(rx_dev), "not ready");
 
+#ifdef CONFIG_SAI_CHECK_ISR_TIMING
+	timing_main();
+#else
 	run();
+#endif
 
 	printk("RESULT: %s (%d passed, %d failed)\n", fails ? "FAIL" : "PASS", passes, fails);
 	return 0;
