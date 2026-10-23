@@ -1,13 +1,10 @@
-[00:02:43.140,000] <err> i2s_stm32_sai: START trigger failed -12
-  FAIL line 431: start -12 (round 0)
-  FAIL line 435: slab leak fter drop running r0 (0 free)
 *** Booting Zephyr OS build v4.5.0-rc2-406-ga03e48c2c567 ***
-SAI DMA hw test (async), slabs 0x20001b60/0x20000b60
-core clock 160000000 Hz, TX DMA irq 30, RX DMA irq 29
-ISR TIMING ws=16, 2000 blocks per direction, 2903 ms
-  TX irq 30: 2000 ISRs (1.00 per block), ns min 3287 avg 10781 p99 11000 max 10800, load 0.742 %
-  RX irq 29: 2000 ISRs (1.00 per block), ns min 12243 avg 13031 p99 13250 max 13262, load 0.897 %
-ISR TIMING ws=32, 2000 blocks per direction, 2903 ms
+SAI DMA hw test (async), slabs 0x20001320/0x20000320
+core clock 160000000 Hz, TX DMA ch 1 irq 30, RX DMA ch 0 irq 29
+ISR TIMING ws=16, 2000 blocks per direction, 2904 ms
   TX irq 30: 2000 ISRs (1.00 per block), ns min 3287 avg 10787 p99 11000 max 10806, load 0.743 %
-  RX irq 29: 2000 ISRs (1.00 per block), ns min 12243 avg 13031 p99 13250 max 13212, load 0.897 %
+  RX irq 29: 2000 ISRs (1.00 per block), ns min 12243 avg 13031 p99 13250 max 13350, load 0.897 %
+ISR TIMING ws=32, 2000 blocks per direction, 2904 ms
+  TX irq 30: 2000 ISRs (1.00 per block), ns min 3287 avg 10793 p99 11000 max 10812, load 0.743 %
+  RX irq 29: 2000 ISRs (1.00 per block), ns min 12250 avg 13031 p99 13250 max 13306, load 0.897 %
 RESULT: PASS (16 passed, 0 failed)

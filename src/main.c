@@ -716,12 +716,55 @@ static __maybe_unused void run(void)
 
 /* ---------- DMA interrupt timing (user tracing hooks + DWT cycle counter) ---------- */
 
-#if !DT_NODE_HAS_COMPAT(DT_DMAS_CTLR(DT_ALIAS(i2s_tx)), st_stm32u5_dma)
-#error "ISR timing maps DMA channels to IRQs for GPDMA (st,stm32u5-dma) only"
+/*
+ * Interrupt of the DMA channel/stream behind a dmas entry. DT_IRQ_BY_IDX() needs a literal
+ * index, so each controller's interrupt list is turned into a table and indexed at run time.
+ */
+#define TX_NODE   DT_ALIAS(i2s_tx)
+#define DMA_CTLR  DT_DMAS_CTLR(TX_NODE)
+#define DMA_CH(n) DT_DMAS_CELL_BY_IDX(n, 0, channel)
+#define IRQ_ELEM(i, n) DT_IRQ_BY_IDX(n, i, irq)
+#define IRQ_LIST(n)    LISTIFY(DT_NUM_IRQS(n), IRQ_ELEM, (,), n)
+
+#if DT_NODE_HAS_COMPAT(DMA_CTLR, st_stm32_dmamux)
+/* DMAMUX channel -> DMA1 or DMA2 stream, as in dmamux_stm32.c */
+static const uint8_t dma1_irqs[] = {IRQ_LIST(DT_NODELABEL(dma1))};
+#define DMA1_FIRST DT_PROP_OR(DT_NODELABEL(dma1), dma_offset, 0)
+#define DMA1_END   (DMA1_FIRST + DT_PROP_OR(DT_NODELABEL(dma1), dma_requests, 0))
+#if DT_NODE_EXISTS(DT_NODELABEL(dma2))
+static const uint8_t dma2_irqs[] = {IRQ_LIST(DT_NODELABEL(dma2))};
+#define DMA2_FIRST DT_PROP_OR(DT_NODELABEL(dma2), dma_offset, 0)
 #endif
 
+static uint32_t sai_dma_irq(uint32_t ch)
+{
+#if DT_NODE_EXISTS(DT_NODELABEL(dma2))
+	if (ch >= DMA1_END) {
+		return dma2_irqs[ch - DMA2_FIRST];
+	}
+#endif
+	return dma1_irqs[ch - DMA1_FIRST];
+}
+#elif DT_NODE_HAS_COMPAT(DMA_CTLR, st_stm32u5_dma)
 /* GPDMA: interrupt index = channel */
-#define SAI_DMA_IRQ(node) DT_IRQ_BY_IDX(DT_DMAS_CTLR(node), DT_DMAS_CELL_BY_IDX(node, 0, channel), irq)
+static const uint8_t ctlr_irqs[] = {IRQ_LIST(DMA_CTLR)};
+
+static uint32_t sai_dma_irq(uint32_t ch)
+{
+	return ctlr_irqs[ch];
+}
+#elif DT_NODE_HAS_COMPAT(DMA_CTLR, st_stm32_dma_v1) || DT_NODE_HAS_COMPAT(DMA_CTLR, st_stm32_dma_v2)
+#include <zephyr/drivers/dma/dma_stm32.h>
+/* DMA v1/v2 referenced directly: the channel cell is offset by STM32_DMA_STREAM_OFFSET */
+static const uint8_t ctlr_irqs[] = {IRQ_LIST(DMA_CTLR)};
+
+static uint32_t sai_dma_irq(uint32_t ch)
+{
+	return ctlr_irqs[ch - STM32_DMA_STREAM_OFFSET];
+}
+#else
+#error "ISR timing: unsupported DMA controller for the SAI"
+#endif
 
 #define HIST_NS    250U /* histogram bucket width */
 #define HIST_SLOTS 256U /* up to 64 us */
@@ -735,10 +778,7 @@ struct isr_stats {
 	uint32_t hist[HIST_SLOTS];
 };
 
-static struct isr_stats stats[2] = {
-	{.irq = SAI_DMA_IRQ(DT_ALIAS(i2s_tx))},
-	{.irq = SAI_DMA_IRQ(DT_ALIAS(i2s_rx))},
-};
+static struct isr_stats stats[2];
 static volatile bool timing_on;
 static uint32_t ns_per_kcycle;
 static uint32_t t_enter;
@@ -799,7 +839,9 @@ static uint32_t percentile_ns(const struct isr_stats *st, uint32_t permille)
 
 static void timing_run(uint8_t ws, int blocks)
 {
-	uint32_t c0, c1;
+	/* Wall time from the system clock: DWT CYCCNT stops while the core sleeps (Cortex-M7) */
+	int64_t t0, t1;
+	uint64_t elapsed_ns;
 	int64_t dt;
 	int ret;
 
@@ -817,21 +859,21 @@ static void timing_run(uint8_t ws, int blocks)
 	CHECK(ret == 0, "configure %d", ret);
 
 	timing_on = true;
-	c0 = DWT->CYCCNT;
+	t0 = k_uptime_get();
 	ret = i2s_trigger(rx_dev, I2S_DIR_RX, I2S_TRIGGER_START);
 	CHECK(ret == 0, "rx start %d", ret);
 	writer_start(ws, blocks);
 	ret = rx_stream(ws, blocks, &dt);
 	CHECK(ret == 0, "rx stream %d", ret);
 	k_thread_join(&writer_thread, K_FOREVER);
-	c1 = DWT->CYCCNT;
+	t1 = k_uptime_get();
 	timing_on = false;
 	rx_stop_and_drain();
 	CHECK(writer_err == 0, "writer error %d", writer_err);
 	CHECK(wait_slab_full(&tx_slab, 500), "tx slab");
 
-	printk("ISR TIMING ws=%u, %d blocks per direction, %u ms\n", ws, blocks,
-	       to_ns(c1 - c0) / 1000000U);
+	elapsed_ns = (uint64_t)(t1 - t0) * 1000000U;
+	printk("ISR TIMING ws=%u, %d blocks per direction, %lld ms\n", ws, blocks, t1 - t0);
 	for (int i = 0; i < 2; i++) {
 		const struct isr_stats *st = &stats[i];
 
@@ -840,19 +882,27 @@ static void timing_run(uint8_t ws, int blocks)
 		       i == 0 ? "TX" : "RX", st->irq, st->count, st->count / blocks,
 		       (st->count % blocks) * 100U / blocks, to_ns(st->min),
 		       st->count ? to_ns(st->sum / st->count) : 0, percentile_ns(st, 990U),
-		       to_ns(st->max), (uint32_t)(st->sum * 100U / (c1 - c0)),
-		       (uint32_t)((st->sum * 100000U / (c1 - c0)) % 1000U));
+		       to_ns(st->max), (uint32_t)(to_ns(st->sum) * 100ULL / elapsed_ns),
+		       (uint32_t)((to_ns(st->sum) * 100000ULL / elapsed_ns) % 1000U));
 	}
 }
 
 static void timing_main(void)
 {
+	stats[0].irq = sai_dma_irq(DMA_CH(DT_ALIAS(i2s_tx)));
+	stats[1].irq = sai_dma_irq(DMA_CH(DT_ALIAS(i2s_rx)));
+
 	CoreDebug->DEMCR |= CoreDebug_DEMCR_TRCENA_Msk;
+#if defined(CONFIG_CPU_CORTEX_M7)
+	/* Cortex-M7: unlock the DWT registers */
+	DWT->LAR = 0xC5ACCE55;
+#endif
 	DWT->CYCCNT = 0;
 	DWT->CTRL |= DWT_CTRL_CYCCNTENA_Msk;
 	ns_per_kcycle = (uint32_t)(1000000000000ULL / sys_clock_hw_cycles_per_sec());
-	printk("core clock %u Hz, TX DMA irq %u, RX DMA irq %u\n", sys_clock_hw_cycles_per_sec(),
-	       stats[0].irq, stats[1].irq);
+	printk("core clock %u Hz, TX DMA ch %u irq %u, RX DMA ch %u irq %u\n",
+	       sys_clock_hw_cycles_per_sec(), DMA_CH(DT_ALIAS(i2s_tx)), stats[0].irq,
+	       DMA_CH(DT_ALIAS(i2s_rx)), stats[1].irq);
 
 	timing_run(16, 2000);
 	timing_run(32, 2000);

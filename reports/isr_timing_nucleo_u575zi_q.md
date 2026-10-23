@@ -11,7 +11,8 @@
 Method: the user tracing hooks (`sys_trace_isr_enter_user()` / `sys_trace_isr_exit_user()`,
 called by the Cortex-M ISR wrapper) read `DWT->CYCCNT` on entry and exit of the two SAI DMA
 interrupts. The time therefore covers the DMA driver ISR and the SAI callback, plus the ISR
-wrapper and the hooks themselves (a few tens of cycles). Nested interrupts are not excluded.
+wrapper and the hooks themselves (a few tens of cycles). Nested interrupts are not excluded. The
+CPU load uses the system uptime for the elapsed time (CYCCNT may stop while the core sleeps).
 Neither driver was modified for the measurement.
 
 ## 16-bit words
@@ -36,8 +37,8 @@ between two blocks.
 ## 32-bit words
 
 The change gives the same figures as at 16 bit (TX 10.79 us, RX 13.03 us per block). `main` is not
-comparable: its stream ended after 1512 ms instead of 2903 ms because it moves 16-bit halves of
-the 32-bit words (DMA width taken from the devicetree).
+comparable: its 2000 blocks took 5807 ms instead of 2904 ms, because it moves 16-bit halves of the
+32-bit words (DMA width taken from the devicetree), so each block needs twice as many SAI slots.
 
 ## Logs
 

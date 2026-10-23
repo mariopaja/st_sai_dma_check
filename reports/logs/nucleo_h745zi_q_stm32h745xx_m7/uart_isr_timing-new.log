@@ -1,0 +1,10 @@
+*** Booting Zephyr OS build v4.5.0-rc2-406-ga03e48c2c567 ***
+SAI DMA hw test (async), slabs 0x24001000/0x24000000 (nocache)
+core clock 400000000 Hz, TX DMA ch 0 irq 11, RX DMA ch 1 irq 12
+ISR TIMING ws=16, 2000 blocks per direction, 2901 ms
+  TX irq 11: 2000 ISRs (1.00 per block), ns min 1660 avg 4905 p99 5250 max 5397, load 0.338 %
+  RX irq 12: 2000 ISRs (1.00 per block), ns min 5270 avg 5480 p99 5750 max 5732, load 0.377 %
+ISR TIMING ws=32, 2000 blocks per direction, 2902 ms
+  TX irq 11: 2000 ISRs (1.00 per block), ns min 1685 avg 5047 p99 5500 max 5342, load 0.347 %
+  RX irq 12: 2000 ISRs (1.00 per block), ns min 5295 avg 5487 p99 5750 max 5780, load 0.378 %
+RESULT: PASS (16 passed, 0 failed)

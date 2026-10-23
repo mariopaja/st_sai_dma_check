@@ -132,7 +132,7 @@ needs `boards/<board>_sync.overlay`; boards without one use `variants/sync.overl
 | `boards/nucleo_n657x0_q.conf` | `CONFIG_NOCACHE_MEMORY=y` (Cortex-M55 D-cache) |
 | `variants/rx_fifo_empty.overlay` | RX `fifo-threshold = "empty"` (used while investigating the FIFO overrun) |
 | `variants/nocache.conf` | `CONFIG_NOCACHE_MEMORY=y` for any board |
-| `variants/isr_timing.conf` | Instead of the checks, time the SAI DMA interrupts (DWT cycle counter in the user tracing ISR hooks) while TX and RX stream; GPDMA boards only. See `reports/isr_timing_nucleo_u575zi_q.md` |
+| `variants/isr_timing.conf` | Instead of the checks, time the SAI DMA interrupts (DWT cycle counter in the user tracing ISR hooks) while TX and RX stream; GPDMA, DMA v1/v2 and DMAMUX routings. See `reports/isr_timing_*.md` |
 
 Slab buffers are 32-byte aligned. They go into the region named by the `zephyr,user` property
 `slab-memory-region` if set (SRAM4 for BDMA), else into `.nocache` when
