@@ -22,7 +22,12 @@
 #include <zephyr/linker/devicetree_regions.h>
 #include <cmsis_core.h>
 
+#ifdef CONFIG_SAI_CHECK_DROP_STORM
+/* Short blocks: more DMA block-end interrupts for DROP to collide with */
+#define FRAMES     8
+#else
 #define FRAMES     64
+#endif
 #define NUM_BLOCKS 8
 #define MAX_BLOCK  (FRAMES * 2 * 4)
 #define RATE       44100
@@ -564,6 +569,131 @@ static void test_concurrent(uint8_t ws, bool gated)
 	CHECK(timing_ok(dt_tx, N_XFER), "tx timing off");
 }
 
+/* ---------- DROP stress: DROP at every phase of the DMA block-end interrupt ---------- */
+
+#define STORM_ROUNDS 1000
+/* DROP delays swept over about two block periods (8 frames = 181 us) */
+#define STORM_DELAY_US(r) (20 + ((r) * 13) % 400)
+
+struct storm_stats {
+	int drop_err;
+	int leak;
+	int restart_err;
+	int first_fail;
+};
+
+static void storm_fail(struct storm_stats *st, int *counter, int r)
+{
+	if (st->first_fail < 0) {
+		st->first_fail = r;
+	}
+	(*counter)++;
+}
+
+static void storm_report(const char *tag, uint8_t ws, bool gated, const struct storm_stats *st)
+{
+	printk("  %s ws=%u gated=%d: %d rounds, drop errors %d, leaks %d, restart errors %d"
+	       ", first failing round %d\n",
+	       tag, ws, gated, STORM_ROUNDS, st->drop_err, st->leak, st->restart_err,
+	       st->first_fail);
+	CHECK(st->drop_err == 0 && st->leak == 0 && st->restart_err == 0,
+	      "%s ws=%u gated=%d: drop %d leak %d restart %d", tag, ws, gated, st->drop_err,
+	      st->leak, st->restart_err);
+}
+
+static void storm_tx(uint8_t ws, bool gated)
+{
+	struct storm_stats st = {.first_fail = -1};
+	uint32_t n = 0;
+	int ret;
+
+	ret = cfg(tx_dev, I2S_DIR_TX, &tx_slab, ws, ctrl_opts(gated));
+	CHECK(ret == 0, "configure %d", ret);
+
+	for (int r = 0; r < STORM_ROUNDS; r++) {
+		for (int i = 0; i < 4; i++) {
+			(void)tx_one(ws, &n);
+		}
+		(void)i2s_trigger(tx_dev, I2S_DIR_TX, I2S_TRIGGER_START);
+		k_busy_wait(STORM_DELAY_US(r));
+		if (i2s_trigger(tx_dev, I2S_DIR_TX, I2S_TRIGGER_DROP) != 0) {
+			storm_fail(&st, &st.drop_err, r);
+		}
+		if (!wait_slab_full(&tx_slab, 20)) {
+			storm_fail(&st, &st.leak, r);
+			(void)i2s_trigger(tx_dev, I2S_DIR_TX, I2S_TRIGGER_DROP);
+			(void)wait_slab_full(&tx_slab, 20);
+		}
+
+		/* The stream must restart right away and run to completion */
+		ret = tx_one(ws, &n);
+		ret |= tx_one(ws, &n);
+		ret |= i2s_trigger(tx_dev, I2S_DIR_TX, I2S_TRIGGER_START);
+		ret |= i2s_trigger(tx_dev, I2S_DIR_TX, I2S_TRIGGER_DRAIN);
+		if (ret != 0 || !wait_slab_full(&tx_slab, 20)) {
+			storm_fail(&st, &st.restart_err, r);
+			(void)i2s_trigger(tx_dev, I2S_DIR_TX, I2S_TRIGGER_DROP);
+			(void)wait_slab_full(&tx_slab, 20);
+		}
+	}
+	storm_report("TX", ws, gated, &st);
+}
+
+static void storm_rx(uint8_t ws, bool gated)
+{
+	struct storm_stats st = {.first_fail = -1};
+	size_t sz;
+	void *b;
+	int ret;
+
+	ret = cfg(rx_dev, I2S_DIR_RX, &rx_slab, ws, ctrl_opts(gated));
+	CHECK(ret == 0, "configure %d", ret);
+
+	for (int r = 0; r < STORM_ROUNDS; r++) {
+		(void)i2s_trigger(rx_dev, I2S_DIR_RX, I2S_TRIGGER_START);
+		k_busy_wait(STORM_DELAY_US(r));
+		if (i2s_trigger(rx_dev, I2S_DIR_RX, I2S_TRIGGER_DROP) != 0) {
+			storm_fail(&st, &st.drop_err, r);
+		}
+		if (!wait_slab_full(&rx_slab, 20)) {
+			storm_fail(&st, &st.leak, r);
+		}
+
+		/* The stream must restart right away and deliver a block */
+		ret = i2s_trigger(rx_dev, I2S_DIR_RX, I2S_TRIGGER_START);
+		if (ret == 0) {
+			ret = i2s_read(rx_dev, &b, &sz);
+			if (ret == 0) {
+				k_mem_slab_free(&rx_slab, b);
+			}
+		}
+		if (ret != 0) {
+			storm_fail(&st, &st.restart_err, r);
+			(void)i2s_trigger(rx_dev, I2S_DIR_RX, I2S_TRIGGER_PREPARE);
+		}
+		(void)i2s_trigger(rx_dev, I2S_DIR_RX, I2S_TRIGGER_DROP);
+		if (!wait_slab_full(&rx_slab, 20)) {
+			storm_fail(&st, &st.leak, r);
+		}
+	}
+	storm_report("RX", ws, gated, &st);
+}
+
+static __maybe_unused void drop_storm(void)
+{
+	static const struct {
+		uint8_t ws;
+		bool gated;
+	} cases[] = {{16, true}, {16, false}, {32, false}};
+
+	printk("DROP STORM: %d rounds per case, %d-frame blocks, DROP at %d..%d us\n",
+	       STORM_ROUNDS, FRAMES, STORM_DELAY_US(0), 20 + 399);
+	ARRAY_FOR_EACH(cases, i) {
+		storm_tx(cases[i].ws, cases[i].gated);
+		storm_rx(cases[i].ws, cases[i].gated);
+	}
+}
+
 static __maybe_unused void run(void)
 {
 	static const uint8_t sizes[] = {16, 24, 32};
@@ -917,8 +1047,10 @@ int main(void)
 	      k_mem_slab_init(&rx_slab, rx_slab_buf, MAX_BLOCK, NUM_BLOCKS) == 0, "slab init");
 	CHECK(device_is_ready(tx_dev) && device_is_ready(rx_dev), "not ready");
 
-#ifdef CONFIG_SAI_CHECK_ISR_TIMING
+#if defined(CONFIG_SAI_CHECK_ISR_TIMING)
 	timing_main();
+#elif defined(CONFIG_SAI_CHECK_DROP_STORM) && !SYNC_RX
+	drop_storm();
 #else
 	run();
 #endif

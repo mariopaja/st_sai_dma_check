@@ -132,11 +132,34 @@ needs `boards/<board>_sync.overlay`; boards without one use `variants/sync.overl
 | `boards/nucleo_n657x0_q.conf` | `CONFIG_NOCACHE_MEMORY=y` (Cortex-M55 D-cache) |
 | `variants/rx_fifo_empty.overlay` | RX `fifo-threshold = "empty"` (used while investigating the FIFO overrun) |
 | `variants/nocache.conf` | `CONFIG_NOCACHE_MEMORY=y` for any board |
+| `variants/drop_storm.conf` | Instead of the checks, DROP stress test (async image): see below |
 | `variants/isr_timing.conf` | Instead of the checks, time the SAI DMA interrupts (DWT cycle counter in the user tracing ISR hooks) while TX and RX stream; GPDMA, DMA v1/v2 and DMAMUX routings. See `reports/isr_timing_*.md` |
 
 Slab buffers are 32-byte aligned. They go into the region named by the `zephyr,user` property
 `slab-memory-region` if set (SRAM4 for BDMA), else into `.nocache` when
 `CONFIG_NOCACHE_MEMORY=y`, else into normal RAM.
+
+## DROP stress test (`variants/drop_storm.conf`)
+
+Checks DROP against a DMA completion callback running at the same time. With 8-frame blocks,
+TX and RX are each started and DROPped 1000 times per case (16 bit gated, 16 bit and 32 bit
+free-running), the delay between START and DROP swept in 13 us steps over 20-419 us (about two
+block periods), so the DROP falls on every phase of the block-end interrupt. After every DROP:
+
+| Check | Fails on |
+|---|---|
+| DROP returns 0 | DROP rejected |
+| All slab blocks back within 20 ms | block leaked, or freed and reloaded |
+| TX: 2 blocks, START and DRAIN complete; RX: START and one block read | channel left busy (`-EBUSY`) or not restarting |
+
+It prints one line per case with the error counts and the first failing round. Driver log
+lines during the run (for example a callback reporting an unexpected state) show how often the
+DROP window is hit. Same wiring as the async image (no FS/SCK jumpers).
+
+```sh
+west build -p -b nucleo_h563zi sai_dma_check -d build/sai_storm -- \
+	-DEXTRA_CONF_FILE=$PWD/sai_dma_check/variants/drop_storm.conf
+```
 
 ## Build and run
 

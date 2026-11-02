@@ -9,4 +9,13 @@ config SAI_CHECK_ISR_TIMING
 	  counter (user tracing hooks) while both directions stream, and print the
 	  statistics. Enable with variants/isr_timing.conf.
 
+config SAI_CHECK_DROP_STORM
+	bool "Run the DROP stress test instead of the checks"
+	help
+	  Use 8-frame blocks and DROP the TX and RX streams 1000 times each,
+	  sweeping the DROP time across two block periods so that it lands on
+	  every phase of the DMA block-end interrupt. After each DROP, check that
+	  all blocks are returned and that the stream restarts. Enable with
+	  variants/drop_storm.conf.
+
 source "Kconfig.zephyr"
