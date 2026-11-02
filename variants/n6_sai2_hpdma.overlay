@@ -1,0 +1,24 @@
+/*
+ * Copyright (c) 2026 Mario Paja
+ *
+ * SPDX-License-Identifier: Apache-2.0
+ */
+
+/*
+ * NUCLEO-N657X0-Q: SAI2 on HPDMA1 instead of GPDMA1, same channels and requests.
+ * Use together with boards/nucleo_n657x0_q.overlay.
+ */
+
+#include <zephyr/dt-bindings/dma/stm32_dma.h>
+
+&hpdma1 {
+	status = "okay";
+};
+
+&sai2_a {
+	dmas = <&hpdma1 3 93 (STM32_DMA_16BITS | STM32_DMA_PRIORITY_HIGH)>;
+};
+
+&sai2_b {
+	dmas = <&hpdma1 2 94 (STM32_DMA_16BITS | STM32_DMA_PRIORITY_HIGH)>;
+};

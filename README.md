@@ -112,6 +112,7 @@ stored and printed after the read loop, so printing cannot overrun the RX queue.
 | `nucleo_f767zi` | as F429ZI | as F429ZI | PE6 to PE3 | PE4 / PE2 |
 | `nucleo_h745zi_q/stm32h745xx/m7` | as F429ZI (SAI1, or SAI4 with the BDMA overlay) | as F429ZI | PE6 to PE3 | PE4 / PE2 |
 | `nucleo_u575zi_q` | as F429ZI | as F429ZI | PE6 to PE3 | PE4 / PE2 |
+| `nucleo_h563zi` | as F429ZI | as F429ZI | PE6 to PE3 | PE4 / PE2 |
 | `nucleo_n657x0_q` | SAI2_A: MCLK PE0, SCK PD13, FS PG13, SD PF5 | SAI2_B: SD PE11, FS PE13, SCK PE12 | PF5 (CN3-28) to PE11 (D7) | PG13 / - (see below) |
 
 The jumper is only used by the sync image. Each board needs `boards/<board>.overlay` (aliases
@@ -129,6 +130,7 @@ needs `boards/<board>_sync.overlay`; boards without one use `variants/sync.overl
 | `variants/h7_sai4_bdma_sync.overlay` | Sync image for SAI4 |
 | `variants/h7_sai4_bdma_direct.overlay` | SAI4 referencing `&bdma1` directly |
 | `variants/n6_sai2b_tx.overlay`, `variants/n6_sai2b_tx_sync.overlay` | N657: swap the roles (TX on SAI2_B, MCLK on PE14, SD PE11; RX on SAI2_A, SD PF5); same jumper |
+| `variants/n6_sai2_hpdma.overlay` | N657: SAI2 on HPDMA1 instead of GPDMA1 (same channels and requests) |
 | `boards/nucleo_n657x0_q.conf` | `CONFIG_NOCACHE_MEMORY=y` (Cortex-M55 D-cache) |
 | `variants/rx_fifo_empty.overlay` | RX `fifo-threshold = "empty"` (used while investigating the FIFO overrun) |
 | `variants/nocache.conf` | `CONFIG_NOCACHE_MEMORY=y` for any board |
