@@ -1,0 +1,14 @@
+*** Booting Zephyr OS build v4.5.0-965-geb331d26db24 ***
+SAI DMA hw test (async), slabs 0x20000520/0x20000320
+DROP STORM: 1000 rounds per case, 8-frame blocks, DROP at 20..419 us
+[00:00:00.252,000] <err> i2s_stm32_sai: TX bad status: 1, Stopping...
+[00:00:00.791,000] <err> i2s_stm32_sai: TX bad status: 1, Stopping...
+[00:00:01.329,000] <err> i2s_stm32_sai: TX bad status: 1, Stopping...
+  TX ws=16 gated=1: 1000 rounds, drop errors 0, leaks 0, restart errors 0, first failing round -1
+  RX ws=16 gated=1: 1000 rounds, drop errors 0, leaks 0, restart errors 0, first failing round -1
+  TX ws=16 gated=0: 1000 rounds, drop errors 0, leaks 0, restart errors 0, first failing round -1
+  RX ws=16 gated=0: 1000 rounds, drop errors 0, leaks 0, restart errors 0, first failing round -1
+[00:00:04.649,000] <err> i2s_stm32_sai: TX bad status: 1, Stopping...
+  TX ws=32 gated=0: 1000 rounds, drop errors 0, leaks 0, restart errors 0, first failing round -1
+  RX ws=32 gated=0: 1000 rounds, drop errors 0, leaks 0, restart errors 0, first failing round -1
+RESULT: PASS (14 passed, 0 failed)

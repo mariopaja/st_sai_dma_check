@@ -1,0 +1,10 @@
+*** Booting Zephyr OS build v4.5.0-965-g7bdffd3af342 ***
+SAI DMA hw test (async), slabs 0x20000520/0x20000320
+DROP STORM: 1000 rounds per case, 8-frame blocks, DROP at 20..419 us
+  TX ws=16 gated=1: 1000 rounds, drop errors 0, leaks 0, restart errors 0, first failing round -1
+  RX ws=16 gated=1: 1000 rounds, drop errors 0, leaks 0, restart errors 0, first failing round -1
+  TX ws=16 gated=0: 1000 rounds, drop errors 0, leaks 0, restart errors 0, first failing round -1
+  RX ws=16 gated=0: 1000 rounds, drop errors 0, leaks 0, restart errors 0, first failing round -1
+  TX ws=32 gated=0: 1000 rounds, drop errors 0, leaks 0, restart errors 0, first failing round -1
+  RX ws=32 gated=0: 1000 rounds, drop errors 0, leaks 0, restart errors 0, first failing round -1
+RESULT: PASS (14 passed, 0 failed)

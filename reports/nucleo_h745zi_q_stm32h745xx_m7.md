@@ -108,3 +108,29 @@ Overlays, used together with `boards/nucleo_h745zi_q_stm32h745xx_m7.overlay`:
 `main` cannot use SAI4 on BDMA in either form. With `&dmamux2`, its HAL DMA handle is built from
 the DMAMUX2 address. With `&bdma1`, the HAL-override DMA setup is rejected with `-EINVAL`.
 Logs: `uart_*bdma-*.log` (DMAMUX2), `uart_*bdmad-*.log` (direct), `uart_*mux-new.log` (DMAMUX1).
+
+## Update 2026-11-02: PR 123259 after review
+
+Driver and devicetree from PR 123259 after the review fixes, rebased on `main` (Zephyr commit
+`7bdffd3af34`). The SoC dtsi now routes SAI1 through `&dmamux1` (SAI1_A channel 0 / request 87,
+SAI1_B channel 1 / request 88), so the SAI1 images use the in-tree routing without a variant
+overlay. The DROP storm (`variants/drop_storm.conf`, see `nucleo_h563zi.md`) was run against
+the change and against the series before the review fixes (`21f685a8699`).
+
+| Image | DMA path | Result |
+|---|---|---|
+| sync loopback | SAI1, DMAMUX1 + DMA1 (SoC dtsi) | **PASS** 65/65, 0 errors, 0 L/R swapped |
+| sync loopback | SAI4, DMAMUX2 + BDMA | **PASS** 65/65, 0 errors, 0 L/R swapped |
+| async | SAI1, DMAMUX1 + DMA1 (SoC dtsi) | **PASS** 1064/1064 |
+| async | SAI4, DMAMUX2 + BDMA | **PASS** 1064/1064 |
+| DROP storm, change | SAI1, DMAMUX1 + DMA1 | **PASS**, 6 x 1000 DROPs, no log line |
+| DROP storm, change | SAI4, DMAMUX2 + BDMA | **PASS**, 6 x 1000 DROPs, no log line |
+| DROP storm, before the review fixes | both paths | PASS, no log line |
+
+Async logs only contain the expected overrun lines (6 x `RX queue full`, 6 x
+`RX invalid state: 4`). The storm does not separate the two driver revisions on this board:
+both pass, and neither revision logs a callback hitting the DROP window, so how often it is hit
+on DMA v1 and BDMA is not known. The race was only observed on the H563 (GPDMA).
+
+Logs: `logs/nucleo_h745zi_q_stm32h745xx_m7/uart_{sync,syncbdma,async,asyncbdma}-review.log`,
+`uart_storm{,bdma}-{new,old}-review.log`.

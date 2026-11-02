@@ -70,3 +70,25 @@ than on the F7/H7/U5 boards).
 - `logs/nucleo_n657x0_q/uart_{async,sync}-new-sai2b_tx.log`: change, swapped layout
 - `logs/nucleo_n657x0_q/uart_{async,sync}-old.log`: `main`
 - `logs/nucleo_n657x0_q/uart_pins-diag-{new,old}.log`: clock-pin cases with the register dump
+
+## Update 2026-11-02: HPDMA1 and PR 123259 after review
+
+Driver from PR 123259 after the review fixes, rebased on `main` (Zephyr commit `7bdffd3af34`),
+secure firmware, RAM load as above, PF5-PE11 jumper. `variants/n6_sai2_hpdma.overlay` moves
+SAI2 from GPDMA1 to HPDMA1 with the same channels and requests (SAI2_A channel 3 / request 93,
+SAI2_B channel 2 / request 94); slabs in `.nocache` AXISRAM (0x3418xxxx).
+
+HPDMA1 uses the same driver (`dma_stm32u5.c`) but its own code there: in secure firmware every
+HPDMA channel gets static CID1 isolation at init (without it, transfers complete without moving
+data), and the source/destination port allocation is left at the reset value (it is only set
+for H7RS). Nothing in the tree used HPDMA1 on the N6 before.
+
+| Image | GPDMA1 | HPDMA1 |
+|---|---|---|
+| sync loopback | **PASS** 65/65 | **PASS** 65/65: 12800 samples per round, 0 errors, 0 L/R swapped |
+| async | **PASS** 1056/1056 | **PASS** 1056/1056 |
+| DROP storm (`variants/drop_storm.conf`) | not run | **PASS**, 6 x 1000 DROPs, no log line |
+
+So the request numbers 93/94 select SAI2 on HPDMA1 as on GPDMA1, and the default port
+allocation reaches both the SAI and AXISRAM. Async logs only contain the expected overrun
+lines. Logs: `logs/nucleo_n657x0_q/uart_{synchp,asynchp,stormhp,sync,async}-review.log`.

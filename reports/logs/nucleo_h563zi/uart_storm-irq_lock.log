@@ -1,0 +1,23 @@
+*** Booting Zephyr OS*** Booting Zephyr OS build v4.5.0-965-g4f929ccbc50b ***
+SAI DMA hw test (async), slabs 0x20000520/0x20000320
+DROP STORM: 1000 rounds per case, 8-frame blocks, DROP at 20..419 us
+[00:00:00.252,000] <err> dma_stm32: dma stream 1 is busy.
+[00:00:00.258,000] <err> i2s_stm32_sai: Failed to configure DMA channel 1: -16
+[00:00:00.266,000] <err> i2s_stm32_sai: START trigger failed -16
+[00:00:00.273,000] <err> i2s_stm32_sai: DRAIN - Invalid state: 1
+[00:00:00.810,000] <err> dma_stm32: dma stream 1 is busy.
+[00:00:00.815,000] <err> i2s_stm32_sai: Failed to configure DMA channel 1: -16
+[00:00:00.823,000] <err> i2s_stm32_sai: START trigger failed -16
+[00:00:00.830,000] <err> i2s_stm32_sai: DRAIN - Invalid state: 1
+[00:00:01.367,000] <err> dma_stm32: dma stream 1 is busy.
+[00:00:01.373,000] <err> i2s_stm32_sai: Failed to configure DMA channel 1: -16
+[00:00:01.381,000] <err> i2s_stm32_sai: START trigger failed -16
+[00:00:01.387,000] <err> i2s_stm32_sai: DRAIN - Invalid state: 1
+  TX ws=16 gated=1: 1000 rounds, drop errors 0, leaks 0, restart errors 3, first failing round 179
+  FAIL line 599: TX ws=16 gated=1: drop 0 leak 0 restart 3
+  RX ws=16 gated=1: 1000 rounds, drop errors 0, leaks 0, restart errors 0, first failing round -1
+  TX ws=16 gated=0: 1000 rounds, drop errors 0, leaks 0, restart errors 0, first failing round -1
+  RX ws=16 gated=0: 1000 rounds, drop errors 0, leaks 0, restart errors 0, first failing round -1
+  TX ws=32 gated=0: 1000 rounds, drop errors 0, leaks 0, restart errors 0, first failing round -1
+  RX ws=32 gated=0: 1000 rounds, drop errors 0, leaks 0, restart errors 0, first failing round -1
+RESULT: FAIL (13 passed, 1 failed)

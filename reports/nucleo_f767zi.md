@@ -78,3 +78,23 @@ with `CONFIG_NOCACHE_MEMORY=y`. The check app now sets that option for this boar
 The cached-slab results above in this report are from the earlier revision that invalidated RX
 blocks. Logs: `uart_{async,sync}-new-nocache.log`, `uart_sync-noinv-nocache.log`,
 `uart_sync-old-nocache.log`.
+
+## Update 2026-11-02: PR 123259 after review
+
+Driver from PR 123259 after the review fixes, rebased on `main` (Zephyr commit `7bdffd3af34`).
+SAI1 still references DMA2 directly (no DMAMUX on F7): SAI1_A `&dma2 1`, slabs `__nocache`.
+The DROP storm (`variants/drop_storm.conf`, see `nucleo_h563zi.md`) was run against the change
+and against the series before the review fixes (`21f685a8699`).
+
+| Image | Result |
+|---|---|
+| sync loopback | **PASS** 65/65, 0 errors, 0 L/R swapped |
+| async | **PASS** 1064/1064 |
+| DROP storm, change | **PASS**, 6 x 1000 DROPs, no log line |
+| DROP storm, before the review fixes | PASS, no log line |
+
+The async log only contains the expected overrun lines; its first line, a `Synchronous RX`
+warning, comes from the sync image still running when the capture started. As on the H745,
+the storm does not separate the two driver revisions here.
+
+Logs: `logs/nucleo_f767zi/uart_{sync,async,storm-new,storm-old}-review.log`.
