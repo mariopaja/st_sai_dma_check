@@ -1,0 +1,7 @@
+&sai1_a {
+	fifo-threshold = "full";
+};
+
+&sai1_b {
+	fifo-threshold = "full";
+};

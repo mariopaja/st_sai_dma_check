@@ -1,0 +1,49 @@
+/*
+ * SAI1_A: TX controller, SCK PE5, FS PE4, SD PE6
+ * SAI1_B: RX target,     SCK PF8, FS PF9, SD PE3
+ * Loopback wiring: PE5-PF8, PE4-PF9, PE6-PE3
+ */
+
+/* 44.27KHz (0.38% Error) */
+&pllsai {
+	div-m = <4>;
+	mul-n = <119>;
+	div-q = <7>;
+	post-div-q = <3>;
+	clocks = <&clk_hse>;
+	status = "okay";
+};
+
+&dma2 {
+	status = "okay";
+};
+
+&sai1 {
+	status = "okay";
+};
+
+&sai1_a {
+	pinctrl-0 = <&sai1_sck_a_pe5 &sai1_fs_a_pe4 &sai1_sd_a_pe6>;
+	pinctrl-names = "default";
+	mclk-divider = "div-256";
+	fifo-threshold = "empty";
+	dma-names = "tx";
+	status = "okay";
+};
+
+&sai1_b {
+	pinctrl-0 = <&sai1_sck_b_pf8 &sai1_fs_b_pf9 &sai1_sd_b_pe3>;
+	pinctrl-names = "default";
+	mclk-divider = "div-256";
+	fifo-threshold = "empty";
+	dma-names = "rx";
+	status = "okay";
+};
+
+&gpioe {
+	status = "okay";
+};
+
+&gpiof {
+	status = "okay";
+};

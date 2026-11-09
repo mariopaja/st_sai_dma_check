@@ -1,0 +1,8 @@
+/* Frame lengths that are not a power of two need the master clock divider off */
+&sai1_a {
+	mclk-divider = "no-div";
+};
+
+&sai1_b {
+	mclk-divider = "no-div";
+};
