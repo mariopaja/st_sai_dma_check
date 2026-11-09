@@ -24,6 +24,8 @@ The app prints one `FAIL line <n>: ...` per failed check and ends with
 | `boards/` | Per-board overlays (`<board>.overlay`, `<board>_sync.overlay`) and `.conf` files |
 | `variants/` | Optional overlays: DMAMUX/BDMA routing, role swap, FIFO threshold, `nocache.conf` |
 | `scripts/` | `build.sh` (new and baseline images) and `run.sh` (flash, capture the console) |
+| `tests/` | More hardware tests (`review`, `stress`, `tdm`) with their own board overlays |
+| `suite/` | `suite.sh` runs every test for a board; `boards/` per-board settings, `KNOWN_ISSUES.md` |
 | `reports/` | Hardware test matrix, per-board reports and raw console logs |
 
 ## Images
@@ -203,6 +205,45 @@ the old driver it starts failing after the first leaked block and then runs into
 
 Do not use `west flash` to compare drivers: it rebuilds the build directory from the current
 tree first.
+
+## Test suite
+
+`suite/suite.sh <board>` builds, flashes and runs every test below for one board and prints one
+table (also written to `suite-out/<board>/summary.txt`, with the console logs next to it). It runs
+on Linux and macOS and needs `west`, STM32_Programmer_CLI and the Zephyr tree under test
+(`ZEPHYR_BASE`, default `<west topdir>/zephyr`). The summary shows that tree's branch and commit.
+
+| Image | App | Wiring | What it covers |
+|---|---|---|---|
+| `check-sync` | check app, sync overlay | jumpers | per-sample data and L/R check, DROP and restart |
+| `review` | `tests/review` | jumpers | one regression test per bug fixed in the DMA migration, loopback at 16/24/32 bit |
+| `review-txtgt` | `tests/review`, `-DTX_TARGET_ONLY=1` | jumpers | SAI1_A as TX target, SAI1_B as controller, free-running and gated |
+| `stress` | `tests/stress` | jumpers | 30 s soak under load, 200 random cycles, overrun/underrun recovery |
+| `tdm`, `tdm-nodiv` | `tests/tdm` | jumpers | up to 16 slots; frames that are not a power of two with `no-div`. **Disabled for now** (TDM is not merged): run them with `--tests tdm,tdm-nodiv`, on a driver with TDM |
+| `spdif-tx` | `tests/spdif-tx` (U575) | PE6-PE3 | S/PDIF output of SAI1_A, sampled by SAI1_B at 192 kHz and decoded in software (preambles, parity, channel status). **Disabled for now** (S/PDIF is not merged): `--tests spdif-tx`, needs the `st/spdif` branch |
+| `spdifrx` | `tests/spdifrx` (H745, F767) | PE6-PD7 | S/PDIF output of SAI1_A looped into the SPDIFRX peripheral, 24 and 32-bit words. **Disabled for now**, own phase `spdifrx` and jumper, needs the `st/spdif` branch |
+| `check-async` | check app | none | trigger paths, pacing, slab accounting, FS/MCLK pins |
+| `check-storm` | check app, `drop_storm.conf` | none | 6 x 1000 DROPs against the DMA completion callback |
+
+The Nucleo-144 boards run the jumper images first (SCK PE5-PF8, FS PE4-PF9, SD PE6-PE3 fitted),
+then ask to remove the SCK and FS jumpers for the images that make SAI1_B a clock controller. A
+wiring probe image checks the jumpers at the start of each phase and stops the phase when they do
+not match. The Nucleo-32 boards need only the SD jumper for the sync image. The `spdifrx` image
+has its own phase (`--phase spdifrx`) with the PE6-PD7 jumper and no probe check: PD7 is an input,
+so a wrong jumper cannot cause contention.
+
+```sh
+suite/suite.sh nucleo_u575zi_q                        # everything, asks before moving jumpers
+suite/suite.sh nucleo_u575zi_q --phase wired          # or one phase at a time
+suite/suite.sh nucleo_l432kc --probe <ST-Link serial> # L4/G4: PEMPTY fix is automatic
+suite/suite.sh nucleo_u575zi_q --tests stress,tdm
+suite/suite.sh nucleo_u575zi_q --from-log tdm uart.log   # judge a saved log
+```
+
+Cases that are known to fail on a board are listed in `suite/boards/<board>.sh` and do not fail
+the run; they are explained in `suite/KNOWN_ISSUES.md`. Boards without overlays for a test app
+skip it. New boards: copy a file in `suite/boards/`. `CLAUDE.md` has the notes for running this
+with Claude Code (sandbox exclusions, jumper handling).
 
 ## Limits
 
