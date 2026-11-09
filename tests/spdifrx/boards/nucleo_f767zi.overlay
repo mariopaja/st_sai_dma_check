@@ -1,0 +1,56 @@
+/*
+ * SAI1_A: S/PDIF TX controller, SD PE6
+ * SPDIFRX: SPDIFRX_IN0 PD7 (INSEL 0)
+ * Wiring: PE6-PD7
+ */
+
+/* SAI kernel clock: 8 MHz / 4 * 119 / 7 / 3 = 11.33 MHz: 44.27 kHz S/PDIF */
+&pllsai {
+	div-m = <4>;
+	mul-n = <119>;
+	div-q = <7>;
+	post-div-q = <3>;
+	clocks = <&clk_hse>;
+	status = "okay";
+};
+
+/* SPDIFRX kernel clock: 8 MHz / 4 * 200 / 4 = 100 MHz */
+&plli2s {
+	div-m = <4>;
+	mul-n = <200>;
+	div-p = <4>;
+	clocks = <&clk_hse>;
+	status = "okay";
+};
+
+&sai1 {
+	status = "okay";
+};
+
+&sai1_a {
+	pinctrl-0 = <&sai1_sd_a_pe6>;
+	pinctrl-names = "default";
+	dma-names = "tx";
+	st,sai-spdif;
+	status = "okay";
+};
+
+&pinctrl {
+	spdifrx_in0_pd7: spdifrx_in0_pd7 {
+		pinmux = <STM32_PINMUX('D', 7, AF8)>;
+	};
+};
+
+&spdifrx {
+	pinctrl-0 = <&spdifrx_in0_pd7>;
+	pinctrl-names = "default";
+	status = "okay";
+};
+
+&dma1 {
+	status = "okay";
+};
+
+&dma2 {
+	status = "okay";
+};
