@@ -57,3 +57,21 @@ other defects are the same as on the L432KC and G431KB (see `nucleo_l432kc.md`).
 
 - `logs/nucleo_f429zi/uart_{async,sync}-new.log`: change
 - `logs/nucleo_f429zi/uart_{async,sync}-old.log`: `main`
+
+## Update 2026-11-03: final driver
+
+Driver from PR 123259 after the review fixes, including the RX-target restart (Zephyr commit
+`6d4d5adc7f1`, branch rebased on `main` at `d1b8eec76bf`). SAI1 still references DMA2 directly
+(no DMAMUX on F4). Same wiring as above: PE6 (SD_A) to PE3 (SD_B) for the sync image only.
+
+| Image | Result |
+|---|---|
+| sync loopback | **PASS** 65/65, 0 errors, 0 L/R swapped |
+| async | **PASS** 1064/1064 |
+| DROP storm (`variants/drop_storm.conf`, see `nucleo_h563zi.md`) | **PASS**, 6 x 1000 DROPs, no log line |
+
+The async log only contains the expected overrun lines (`RX queue full`, `RX invalid state`);
+the sync log has the `Synchronous RX` warning. This replaces the earlier results on the
+revision before the `SAIEN` wait; the async check count grew with the app (1003 to 1064).
+
+Logs: `logs/nucleo_f429zi/uart_{sync,async,storm}-review.log`.

@@ -85,3 +85,40 @@ while TX keeps streaming.
 - `logs/nucleo_l432kc/uart_async-new.log`, `uart_sync-new.log`: change, final revision
 - `logs/nucleo_l432kc/uart_async-old.log`, `uart_sync-old.log`, `uart_syncfifo-old.log`: `main`
 - `../run.sh`, `../build.sh`: flash/capture and build helpers
+
+## Update 2026-11-03: final driver
+
+Driver from PR 123259 after the review fixes, including the RX-target restart (Zephyr commit
+`6d4d5adc7f1`, branch rebased on `main` at `d1b8eec76bf`). Same wiring as above: D0 (PA10) to
+D11 (PB5) for the sync image only. Flashed with `PEMPTY_FIX=1`.
+
+| Image | Result |
+|---|---|
+| sync loopback | **PASS** 65/65, 0 errors, 0 L/R swapped |
+| async | **PASS** 1064/1064 |
+| DROP storm (`variants/drop_storm.conf`, see `nucleo_h563zi.md`) | **PASS**, 6 x 1000 DROPs, no log line |
+
+The async log only contains the expected overrun lines (`RX queue full`, `RX invalid state`);
+the sync log has the `Synchronous RX` warning. This replaces the earlier results on the
+revision before the `SAIEN` wait; the async check count grew with the app (1003 to 1064).
+
+Logs: `logs/nucleo_l432kc/uart_{sync,async,storm}-review.log`.
+
+## Update 2026-11-10: DMAMUX routing commit
+
+Branch `st_sai/dma/zephyr_api_migration` at `0ec7248738e` ("dts: arm: st: route SAI DMA requests
+through DMAMUX"), three commits on `main` at `0534e997eac`. The L432 has no DMAMUX, so this run
+checks that the series does not regress the DMA2 path. Run with `suite/suite.sh nucleo_l432kc
+--phase wired`, same wiring: D0 (PA10) to D11 (PB5). PEMPTY was cleared after flashing.
+
+| Image | Result |
+|---|---|
+| sync loopback | **PASS** 65/65 |
+| async | **PASS** 1064/1064 |
+| DROP storm | **PASS** 14/14 |
+
+No expected failures were hit. Same as on 2026-11-03, the async log has only the expected overrun
+lines (6 x `RX queue full`, 6 x `RX invalid state`), the sync log has the `Synchronous RX`
+warning (3 times), and the storm log has no log lines.
+
+Logs: `logs/nucleo_l432kc/uart_{sync,async,storm}-dmamux.log`, `suite_summary-dmamux.txt`.

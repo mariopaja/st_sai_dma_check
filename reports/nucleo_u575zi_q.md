@@ -82,3 +82,21 @@ stops with the sub-block there. The check app expects MCLK to keep running where
 - `logs/nucleo_u575zi_q/uart_{async,sync}-new.log`: change with SAIEN wait
 - `logs/nucleo_u575zi_q/uart_async-head_209d616.log`: driver without the `SAIEN` wait
 - `logs/nucleo_u575zi_q/uart_{async,sync}-old.log`: `main`
+
+## Update 2026-11-03: final driver
+
+Driver from PR 123259 after the review fixes, including the RX-target restart (Zephyr commit
+`6d4d5adc7f1`, branch rebased on `main` at `d1b8eec76bf`). SAI1 on GPDMA1, non-secure. Wiring:
+PE6 (SD_A) to PE3 (SD_B) for the sync image only, no FS/SCK jumpers.
+
+| Image | Result |
+|---|---|
+| sync loopback | **PASS** 65/65, 0 errors, 0 L/R swapped |
+| async | **PASS** 1064/1064 |
+| DROP storm (`variants/drop_storm.conf`, see `nucleo_h563zi.md`) | **PASS**, 6 x 1000 DROPs, no log line |
+
+The async log only contains the expected overrun lines (`RX queue full`, `RX invalid state`);
+the sync log has the `Synchronous RX` warning. The check counts grew with the app (async 1063
+to 1064, sync 64 to 65).
+
+Logs: `logs/nucleo_u575zi_q/uart_{sync,async,storm}-review.log`.

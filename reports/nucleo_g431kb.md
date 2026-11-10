@@ -78,3 +78,42 @@ Each defect and its fix is described in `nucleo_l432kc.md`.
 - `logs/nucleo_g431kb/uart_{async,sync}-mux.log`: change, `&dmamux1` routing
 - `logs/nucleo_g431kb/uart_{async,sync}-old.log`: `main`
 - `logs/nucleo_g431kb/first_revision/`: earlier app and driver revision (pacing and leak checks only)
+
+## Update 2026-11-03: final driver
+
+Driver from PR 123259 after the review fixes, including the RX-target restart (Zephyr commit
+`6d4d5adc7f1`, branch rebased on `main` at `d1b8eec76bf`). SAI1 on `&dmamux1` mux 0/1, the
+`stm32g4.dtsi` default. Same wiring as above: D0 (PA10) to D11 (PB5) for the sync image only.
+
+| Image | Result |
+|---|---|
+| sync loopback | **PASS** 65/65, 0 errors, 0 L/R swapped |
+| async | **PASS** 1056/1056 |
+| DROP storm (`variants/drop_storm.conf`, see `nucleo_h563zi.md`) | **PASS**, 6 x 1000 DROPs, no log line |
+
+The async log only contains the expected overrun lines (`RX queue full`, `RX invalid state`);
+the sync log has the `Synchronous RX` warning. This replaces the earlier results on the
+revision before the `SAIEN` wait; the async check count grew with the app (995 to 1056).
+
+Logs: `logs/nucleo_g431kb/uart_{sync,async,storm}-review.log`.
+
+## Update 2026-11-10: DMAMUX routing commit
+
+Branch `st_sai/dma/zephyr_api_migration` at `0ec7248738e` ("dts: arm: st: route SAI DMA requests
+through DMAMUX"), three commits on `main` at `0534e997eac`. SAI1 DMA comes from `stm32g4.dtsi`
+(`<&dmamux1 0 108 ...>` / `<&dmamux1 1 109 ...>`); the test overlay sets no `dmas`. Board
+NUCLEO-G431KB, ST-LINK V3 SN 002B003C3233510F39363634. Run with `suite/suite.sh nucleo_g431kb
+--phase wired --probe 002B003C3233510F39363634 --port /dev/serial/by-id/usb-STMicroelectronics_STLINK-V3_002B003C3233510F39363634-if02`
+(without `--port` the suite finds no console for the V3 by-id name). Wiring: D0 (PA10) to D11 (PB5).
+
+| Image | Result |
+|---|---|
+| sync loopback | **PASS** 65/65 |
+| async | **PASS** 1056/1056 |
+| DROP storm | **PASS** 14/14 |
+
+No expected failures were hit. The async log has only the expected overrun lines
+(6 x `RX queue full`, 6 x `RX invalid state`), the sync log the `Synchronous RX` warning (3 times),
+the storm log no log lines.
+
+Logs: `logs/nucleo_g431kb/uart_{sync,async,storm}-dmamux.log`, `suite_summary-dmamux.txt`.

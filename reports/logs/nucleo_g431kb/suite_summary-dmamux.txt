@@ -1,0 +1,8 @@
+Board nucleo_g431kb (sd_only loopback), 2026-11-10 08:40
+Zephyr st_sai/dma/zephyr_api_migration 0ec7248738e dts: arm: st: route SAI DMA requests through DMAMUX
+Driver TDM support: no
+
+image            result     passed  failed  note
+check-sync       PASS           65       0  
+check-async      PASS         1056       0  
+check-storm      PASS           14       0  
